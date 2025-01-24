@@ -13,14 +13,17 @@ import java.util.Optional;
 public class VoyageService {
     private Connection connection;
 
+    // Constructeur : Initialise la connexion à la base de données
     public VoyageService() {
         this.connection = DatabaseConnection.getConnection();
     }
 
+    // Crée un nouveau voyage et insère ses détails dans la base de données
     public void createVoyage(Voyage voyage) {
         String sql = "INSERT INTO voyage (reference, prix_par_personne, destination, descriptif, date_depart, date_retour, type_voyage) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            // Remplissage des paramètres de la requête
             pstmt.setString(1, voyage.getReference());
             pstmt.setInt(2, voyage.getPrixParPersonne());
             pstmt.setString(3, voyage.getDestination());
@@ -34,6 +37,7 @@ public class VoyageService {
                 throw new SQLException("Creating voyage failed, no rows affected.");
             }
 
+            // Récupération de l'ID généré
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     voyage.setId(generatedKeys.getLong(1));
@@ -42,6 +46,7 @@ public class VoyageService {
                 }
             }
 
+            // Insérer les informations spécifiques à chaque type de voyage
             if (voyage instanceof VoyageOrganise) {
                 createVoyageOrganise((VoyageOrganise) voyage);
             } else if (voyage instanceof VoyagePersonnalise) {
@@ -52,6 +57,7 @@ public class VoyageService {
         }
     }
 
+    // Insère un voyage organisé dans la base de données
     private void createVoyageOrganise(VoyageOrganise voyage) {
         String sql = "INSERT INTO voyage_organise (id, nb_place_maxi, date_validite) VALUES (?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -64,6 +70,7 @@ public class VoyageService {
         }
     }
 
+    // Insère un voyage personnalisé dans la base de données
     private void createVoyagePersonnalise(VoyagePersonnalise voyage) {
         String sql = "INSERT INTO voyage_personnalise (id, preference) VALUES (?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -75,6 +82,7 @@ public class VoyageService {
         }
     }
 
+    // Récupère un voyage par son ID
     public Optional<Voyage> getVoyageById(Long id) {
         String sql = "SELECT v.*, vo.nb_place_maxi, vo.date_validite, vp.preference " +
                 "FROM voyage v " +
@@ -93,6 +101,7 @@ public class VoyageService {
         return Optional.empty();
     }
 
+    // Récupère tous les voyages de la base de données
     public List<Voyage> getAllVoyages() {
         List<Voyage> voyages = new ArrayList<>();
         String sql = "SELECT v.*, vo.nb_place_maxi, vo.date_validite, vp.preference " +
@@ -110,6 +119,7 @@ public class VoyageService {
         return voyages;
     }
 
+    // Met à jour les informations d'un voyage
     public void updateVoyage(Voyage voyage) {
         String sql = "UPDATE voyage SET reference = ?, prix_par_personne = ?, destination = ?, " +
                 "descriptif = ?, date_depart = ?, date_retour = ? WHERE id = ?";
@@ -122,40 +132,12 @@ public class VoyageService {
             pstmt.setDate(6, new java.sql.Date(voyage.getDateRetour().getTime()));
             pstmt.setLong(7, voyage.getId());
             pstmt.executeUpdate();
-
-            if (voyage instanceof VoyageOrganise) {
-                updateVoyageOrganise((VoyageOrganise) voyage);
-            } else if (voyage instanceof VoyagePersonnalise) {
-                updateVoyagePersonnalise((VoyagePersonnalise) voyage);
-            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    private void updateVoyageOrganise(VoyageOrganise voyage) {
-        String sql = "UPDATE voyage_organise SET nb_place_maxi = ?, date_validite = ? WHERE id = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, voyage.getNbPlaceMaxi());
-            pstmt.setDate(2, new java.sql.Date(voyage.getDateValidite().getTime()));
-            pstmt.setLong(3, voyage.getId());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void updateVoyagePersonnalise(VoyagePersonnalise voyage) {
-        String sql = "UPDATE voyage_personnalise SET preference = ? WHERE id = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, voyage.getPreference());
-            pstmt.setLong(2, voyage.getId());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
+    // Supprime un voyage de la base de données
     public void deleteVoyage(Long id) {
         String sql = "DELETE FROM voyage WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -166,6 +148,7 @@ public class VoyageService {
         }
     }
 
+    // Crée un objet Voyage à partir d'un ResultSet
     private Voyage createVoyageFromResultSet(ResultSet rs) throws SQLException {
         Voyage voyage;
         if (rs.getString("type_voyage").equals("ORGANISE")) {
@@ -188,4 +171,3 @@ public class VoyageService {
         return voyage;
     }
 }
-
