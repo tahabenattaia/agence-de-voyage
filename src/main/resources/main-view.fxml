@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.MainController"
+            prefHeight="600.0" prefWidth="800.0">
+    <top>
+        <MenuBar>
+            <Menu text="Fichier">
+                <MenuItem text="Quitter" onAction="#handleExit"/>
+            </Menu>
+            <Menu text="Aide">
+                <MenuItem text="À propos" onAction="#handleAbout"/>
+            </Menu>
+        </MenuBar>
+    </top>
+    <left>
+        <VBox spacing="10" alignment="TOP_CENTER" style="-fx-background-color: #f0f0f0; -fx-padding: 10;">
+            <Button text="Voyages" onAction="#showVoyagesView" prefWidth="150" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+            <Button text="Clients" onAction="#showClientsView" prefWidth="150" style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
+            <Button text="Réservations" onAction="#showReservationsView" prefWidth="150" style="-fx-background-color: #FFC107; -fx-text-fill: white;"/>
+            <Button text="Itinéraires" onAction="#showItinerairesView" prefWidth="150" style="-fx-background-color: #9C27B0; -fx-text-fill: white;"/>
+            <Button text="Réservation Client" onAction="#showClientReservationView" prefWidth="150" style="-fx-background-color: #FF5722; -fx-text-fill: white;"/>
+        </VBox>
+    </left>
+    <center>
+        <StackPane fx:id="contentArea" style="-fx-background-color: white;">
+            <Label text="Bienvenue dans l'application de gestion de voyages" style="-fx-font-size: 20; -fx-font-weight: bold;"/>
+        </StackPane>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #e0e0e0; -fx-padding: 5;">
+            <Label fx:id="statusLabel" text="Prêt"/>
+        </HBox>
+    </bottom>
+</BorderPane>
+

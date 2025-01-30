@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.RechercheController"
+      spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Recherche" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <TextField fx:id="searchField" promptText="Entrez votre recherche" HBox.hgrow="ALWAYS"/>
+        <ComboBox fx:id="searchTypeCombo" promptText="Type de recherche"/>
+        <Button text="Rechercher" onAction="#handleSearch" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+    </HBox>
+
+    <TableView fx:id="resultTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="column1" text="Colonne 1" prefWidth="150"/>
+            <TableColumn fx:id="column2" text="Colonne 2" prefWidth="150"/>
+            <TableColumn fx:id="column3" text="Colonne 3" prefWidth="150"/>
+        </columns>
+    </TableView>
+</VBox>
+

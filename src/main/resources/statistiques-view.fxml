@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.StatistiquesController"
+      spacing="20" alignment="CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Statistiques" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+
+    <TabPane VBox.vgrow="ALWAYS">
+        <Tab text="Top Destinations">
+            <BarChart fx:id="topDestinationsChart">
+                <xAxis>
+                    <CategoryAxis label="Destinations"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Nombre de réservations"/>
+                </yAxis>
+            </BarChart>
+        </Tab>
+        <Tab text="Types de Clients">
+            <PieChart fx:id="clientTypeChart"/>
+        </Tab>
+        <Tab text="Revenus">
+            <LineChart fx:id="revenueChart">
+                <xAxis>
+                    <CategoryAxis label="Mois"/>
+                </xAxis>
+                <yAxis>
+                    <NumberAxis label="Revenus (€)"/>
+                </yAxis>
+            </LineChart>
+        </Tab>
+    </TabPane>
+</VBox>
+
