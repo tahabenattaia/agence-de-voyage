@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.VoyageController"
+      spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Gestion des Voyages" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Référence:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="referenceField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+        <Label text="Destination:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+        <TextField fx:id="destinationField" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+        <Label text="Prix:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextField fx:id="prixField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <Label text="Date de départ:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <DatePicker fx:id="dateDepartPicker" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+        <Label text="Date de retour:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <DatePicker fx:id="dateRetourPicker" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+        <Label text="Type:" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+        <ComboBox fx:id="typeVoyageCombo" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+    </GridPane>
+
+    <TextArea fx:id="descriptifArea" promptText="Descriptif" prefRowCount="3"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Créer" onAction="#handleCreateVoyage" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button text="Mettre à jour" onAction="#handleUpdateVoyage" style="-fx-background-color: #FFC107; -fx-text-fill: white;"/>
+        <Button text="Supprimer" onAction="#handleDeleteVoyage" style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
+        <Button text="Effacer les champs" onAction="#handleClearFields" style="-fx-background-color: #9E9E9E; -fx-text-fill: white;"/>
+    </HBox>
+
+    <TableView fx:id="voyageTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn text="Référence" fx:id="referenceColumn"/>
+            <TableColumn text="Destination" fx:id="destinationColumn"/>
+            <TableColumn text="Prix" fx:id="prixColumn"/>
+            <TableColumn text="Date de départ" fx:id="dateDepartColumn"/>
+            <TableColumn text="Date de retour" fx:id="dateRetourColumn"/>
+            <TableColumn text="Type" fx:id="typeColumn"/>
+        </columns>
+    </TableView>
+</VBox>
+
