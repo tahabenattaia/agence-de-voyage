@@ -40,7 +40,7 @@ public class MainController {
 
     @FXML
     private void showReservationsView() {
-        loadView("/fxml/reservation-view.fxml", "Gestion des Réservations");
+        loadView("/reservation-view.fxml", "Gestion des Réservations");
     }
 
     @FXML
@@ -50,7 +50,7 @@ public class MainController {
 
     @FXML
     private void showClientReservationView() {
-        loadView("/fxml/client-reservation-view.fxml", "Réservation Client");
+        loadView("/client-reservation-view.fxml", "Réservation Client");
     }
 
     private void loadView(String fxmlFile, String title) {
