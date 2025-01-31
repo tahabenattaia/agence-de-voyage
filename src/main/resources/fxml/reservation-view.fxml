@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controllers.ReservationController"
+      spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Gestion des Réservations" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="ID Réservation:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="idReservationField" GridPane.columnIndex="1" GridPane.rowIndex="0" editable="false"/>
+
+        <Label text="Client:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+        <ComboBox fx:id="clientCombo" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+        <Label text="Voyage:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <ComboBox fx:id="voyageCombo" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+        <Label text="Date de réservation:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+        <DatePicker fx:id="dateReservationPicker" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+
+        <Label text="Nombre de places:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+        <Spinner fx:id="nbPlaceSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+        <Label text="Statut:" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
+        <ComboBox fx:id="statutCombo" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+    </GridPane>
+
+    <TextArea fx:id="commentairesArea" promptText="Commentaires" prefRowCount="3"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Créer" onAction="#handleCreateReservation" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button text="Mettre à jour" onAction="#handleUpdateReservation" style="-fx-background-color: #FFC107; -fx-text-fill: white;"/>
+        <Button text="Supprimer" onAction="#handleDeleteReservation" style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
+        <Button text="Effacer les champs" onAction="#handleClearFields" style="-fx-background-color: #9E9E9E; -fx-text-fill: white;"/>
+    </HBox>
+
+    <TableView fx:id="reservationTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn text="ID Réservation" fx:id="idReservationColumn"/>
+            <TableColumn text="Client" fx:id="clientColumn"/>
+            <TableColumn text="Voyage" fx:id="voyageColumn"/>
+            <TableColumn text="Date de réservation" fx:id="dateReservationColumn"/>
+            <TableColumn text="Nombre de places" fx:id="nbPlaceColumn"/>
+            <TableColumn text="Statut" fx:id="statutColumn"/>
+        </columns>
+    </TableView>
+</VBox>
+

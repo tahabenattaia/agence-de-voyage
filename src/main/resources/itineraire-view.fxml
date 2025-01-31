@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.ItineraireController"
+      spacing="10" alignment="CENTER">
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="Gestion des Itinéraires" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Label text="Sélectionner un voyage:"/>
+        <ComboBox fx:id="voyageComboBox" prefWidth="200"/>
+    </HBox>
+
+    <TableView fx:id="jourTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn text="Jour" fx:id="jourColumn" prefWidth="100"/>
+            <TableColumn text="Description" fx:id="descriptionColumn" prefWidth="300"/>
+        </columns>
+    </TableView>
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Jour:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+        <TextField fx:id="jourField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+        <Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+        <TextArea fx:id="descriptionArea" GridPane.columnIndex="1" GridPane.rowIndex="1" prefRowCount="3"/>
+    </GridPane>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Ajouter Jour" fx:id="ajouterJourButton" onAction="#handleAjouterJour"
+                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button text="Modifier Jour" fx:id="modifierJourButton" onAction="#handleModifierJour"
+                style="-fx-background-color: #FFC107; -fx-text-fill: white;"/>
+        <Button text="Supprimer Jour" fx:id="supprimerJourButton" onAction="#handleSupprimerJour"
+                style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
+    </HBox>
+
+    <Label fx:id="messageLabel" style="-fx-font-style: italic;"/>
+</VBox>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

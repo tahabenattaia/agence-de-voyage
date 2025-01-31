@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClientReservationController">
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20" />
+    </padding>
+
+    <Label style="-fx-font-size: 24; -fx-font-weight: bold;" text="Réservation Client" />
+
+    <GridPane hgap="10" vgap="10">
+        <Label text="Code Client:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <TextField fx:id="codeClientField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+        <Label text="Nom:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+        <TextField fx:id="nomField" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+
+        <Button onAction="#handleIdentifyClient" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Identifier" GridPane.columnIndex="4" GridPane.rowIndex="0" />
+      <columnConstraints>
+         <ColumnConstraints />
+         <ColumnConstraints />
+         <ColumnConstraints />
+         <ColumnConstraints />
+         <ColumnConstraints />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
+    </GridPane>
+
+    <TableView fx:id="voyageTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="referenceColumn" text="Référence" />
+            <TableColumn fx:id="destinationColumn" text="Destination" />
+            <TableColumn fx:id="dateDepartColumn" prefWidth="115.199951171875" text="Date de départ" />
+            <TableColumn fx:id="prixColumn" prefWidth="82.4000244140625" text="Prix" />
+        </columns>
+    </TableView>
+
+    <HBox alignment="CENTER" spacing="10">
+        <Label text="Nombre de places:" />
+        <Spinner fx:id="nbPlaceSpinner" initialValue="1" max="10" min="1" />
+        <Button onAction="#handleReservation" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Réserver" />
+    </HBox>
+
+    <Label fx:id="messageLabel" style="-fx-font-style: italic;" />
+</VBox>
