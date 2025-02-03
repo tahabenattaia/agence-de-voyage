@@ -1,33 +1,32 @@
 package org.example;
 
+import controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import controller.MainController;
+
+import java.io.IOException;
 
 public class App extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("main-view.fxml"));
-            Parent root = loader.load();
+    public void start(Stage stage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/main-view.fxml"));
+        Parent root = fxmlLoader.load();
 
-            MainController controller = loader.getController();
-            controller.setPrimaryStage(primaryStage);
+        // ✅ Pass the primary stage to the controller
+        MainController controller = fxmlLoader.getController();
+        controller.setPrimaryStage(stage);
 
-            primaryStage.setTitle("Gestion de Voyages");
-            primaryStage.setScene(new Scene(root, 800, 600));
-            primaryStage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Scene scene = new Scene(root, 800, 600);
+        stage.setTitle("Agence de Voyage");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 }
-

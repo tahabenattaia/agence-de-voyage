@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
@@ -114,6 +115,10 @@ public class VoyageController {
         dateDepartPicker.setValue(null);
         dateRetourPicker.setValue(null);
         typeVoyageCombo.getSelectionModel().clearSelection();
+    }
+
+    public void handleClearFields() {
+        clearFields();
     }
 }
 

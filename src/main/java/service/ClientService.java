@@ -14,7 +14,9 @@ public class ClientService {
     private Connection connection;
 
     public ClientService() {
+
         this.connection = DatabaseConnection.getConnection();
+
     }
 
     /**

@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Itineraire {
     private Long id;
-    private List<Jour> jours = new ArrayList<>();
+    private List<Jour> jours ;
     private Map<Integer, String> pointsInteret;
     private Set<String> activites;
 

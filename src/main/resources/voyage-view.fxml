@@ -1,57 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="controller.VoyageController"
-      spacing="10" alignment="CENTER">
+<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.VoyageController">
     <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
+        <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
 
-    <Label text="Gestion des Voyages" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+    <Label style="-fx-font-size: 24; -fx-font-weight: bold;" text="Gestion des Voyages" />
 
     <GridPane hgap="10" vgap="10">
-        <Label text="Référence:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <TextField fx:id="referenceField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <Label text="Référence:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <TextField fx:id="referenceField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-        <Label text="Destination:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
-        <TextField fx:id="destinationField" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+        <Label text="Destination:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+        <TextField fx:id="destinationField" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
-        <Label text="Prix:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-        <TextField fx:id="prixField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+        <Label text="Prix:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <TextField fx:id="prixField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-        <Label text="Date de départ:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
-        <DatePicker fx:id="dateDepartPicker" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+        <Label text="Date de départ:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+        <DatePicker fx:id="dateDepartPicker" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
-        <Label text="Date de retour:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-        <DatePicker fx:id="dateRetourPicker" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+        <Label text="Date de retour:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <DatePicker fx:id="dateRetourPicker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-        <Label text="Type:" GridPane.columnIndex="2" GridPane.rowIndex="2"/>
-        <ComboBox fx:id="typeVoyageCombo" GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+        <Label text="Type:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+        <ComboBox fx:id="typeVoyageCombo" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <columnConstraints>
+         <ColumnConstraints />
+         <ColumnConstraints />
+         <ColumnConstraints />
+         <ColumnConstraints />
+      </columnConstraints>
+      <rowConstraints>
+         <RowConstraints />
+         <RowConstraints />
+         <RowConstraints />
+      </rowConstraints>
     </GridPane>
 
-    <TextArea fx:id="descriptifArea" promptText="Descriptif" prefRowCount="3"/>
+    <TextArea fx:id="descriptifArea" prefRowCount="3" promptText="Descriptif" />
 
-    <HBox spacing="10" alignment="CENTER">
-        <Button text="Créer" onAction="#handleCreateVoyage" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
-        <Button text="Mettre à jour" onAction="#handleUpdateVoyage" style="-fx-background-color: #FFC107; -fx-text-fill: white;"/>
-        <Button text="Supprimer" onAction="#handleDeleteVoyage" style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
-        <Button text="Effacer les champs" onAction="#handleClearFields" style="-fx-background-color: #9E9E9E; -fx-text-fill: white;"/>
+    <HBox alignment="CENTER" spacing="10">
+        <Button onAction="#handleCreateVoyage" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Créer" />
+        <Button onAction="#handleUpdateVoyage" style="-fx-background-color: #FFC107; -fx-text-fill: white;" text="Mettre à jour" />
+        <Button onAction="#handleDeleteVoyage" style="-fx-background-color: #F44336; -fx-text-fill: white;" text="Supprimer" />
+        <Button onAction="#handleClearFields" style="-fx-background-color: #9E9E9E; -fx-text-fill: white;" text="Effacer les champs" />
     </HBox>
 
     <TableView fx:id="voyageTable" VBox.vgrow="ALWAYS">
         <columns>
-            <TableColumn text="Référence" fx:id="referenceColumn"/>
-            <TableColumn text="Destination" fx:id="destinationColumn"/>
-            <TableColumn text="Prix" fx:id="prixColumn"/>
-            <TableColumn text="Date de départ" fx:id="dateDepartColumn"/>
-            <TableColumn text="Date de retour" fx:id="dateRetourColumn"/>
-            <TableColumn text="Type" fx:id="typeColumn"/>
+            <TableColumn fx:id="referenceColumn" text="Référence" />
+            <TableColumn fx:id="destinationColumn" text="Destination" />
+            <TableColumn fx:id="prixColumn" text="Prix" />
+            <TableColumn fx:id="dateDepartColumn" text="Date de départ" />
+            <TableColumn fx:id="dateRetourColumn" text="Date de retour" />
+            <TableColumn fx:id="typeColumn" text="Type" />
         </columns>
     </TableView>
 </VBox>
-

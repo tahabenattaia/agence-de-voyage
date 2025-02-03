@@ -6,7 +6,7 @@
 
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
-      fx:controller="controllers.ReservationController"
+      fx:controller="controller.ClientReservationController"
       spacing="10" alignment="CENTER">
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
@@ -37,7 +37,7 @@
     <TextArea fx:id="commentairesArea" promptText="Commentaires" prefRowCount="3"/>
 
     <HBox spacing="10" alignment="CENTER">
-        <Button text="Créer" onAction="#handleCreateReservation" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button text="Créer" onAction="#handleReservation" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
         <Button text="Mettre à jour" onAction="#handleUpdateReservation" style="-fx-background-color: #FFC107; -fx-text-fill: white;"/>
         <Button text="Supprimer" onAction="#handleDeleteReservation" style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
         <Button text="Effacer les champs" onAction="#handleClearFields" style="-fx-background-color: #9E9E9E; -fx-text-fill: white;"/>
