@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import model.Client;
 import model.Voyage;
 import model.Reservation;
-import service.ClientService;
 import service.VoyageService;
 import service.ReservationService;
 
@@ -16,24 +15,29 @@ import java.util.List;
 
 public class ClientReservationController {
 
-    @FXML private TextField codeClientField;
-    @FXML private TextField nomField;
-    @FXML private TableView<Voyage> voyageTable;
-    @FXML private TableColumn<Voyage, String> referenceColumn;
-    @FXML private TableColumn<Voyage, String> destinationColumn;
-    @FXML private TableColumn<Voyage, String> dateDepartColumn;
-    @FXML private TableColumn<Voyage, String> prixColumn;
-    @FXML private Spinner<Integer> nbPlaceSpinner;
-    @FXML private Label messageLabel;
+    @FXML
+    private Label clientInfoLabel;
+    @FXML
+    private TableView<Voyage> voyageTable;
+    @FXML
+    private TableColumn<Voyage, String> referenceColumn;
+    @FXML
+    private TableColumn<Voyage, String> destinationColumn;
+    @FXML
+    private TableColumn<Voyage, String> dateDepartColumn;
+    @FXML
+    private TableColumn<Voyage, String> prixColumn;
+    @FXML
+    private Spinner<Integer> nbPlaceSpinner;
+    @FXML
+    private Label messageLabel;
 
-    private ClientService clientService;
     private VoyageService voyageService;
     private ReservationService reservationService;
     private ObservableList<Voyage> voyageList;
     private Client currentClient;
 
     public void initialize() {
-        clientService = new ClientService();
         voyageService = new VoyageService();
         reservationService = new ReservationService();
         voyageList = FXCollections.observableArrayList();
@@ -44,11 +48,22 @@ public class ClientReservationController {
         nbPlaceSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 1));
     }
 
+    public void setCurrentClient(Client client) {
+        this.currentClient = client;
+        updateClientInfo();
+    }
+
+    private void updateClientInfo() {
+        if (currentClient != null) {
+            clientInfoLabel.setText("Client: " + currentClient.getNom() + " (" + currentClient.getCode_cli() + ")");
+        }
+    }
+
     private void setupTableColumns() {
         referenceColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getReference()));
         destinationColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDestination()));
         dateDepartColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDateDepart().toString()));
-        prixColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPrixParPersonne() + " €"));
+        prixColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPrixParPersonne() + " DT"));
     }
 
     private void loadVoyages() {
@@ -58,22 +73,9 @@ public class ClientReservationController {
     }
 
     @FXML
-    private void handleIdentifyClient() {
-        String codeClient = codeClientField.getText();
-        String nom = nomField.getText();
-
-        currentClient = clientService.getClientByCodeAndNom(codeClient, nom);
-        if (currentClient != null) {
-            messageLabel.setText("Client identifié : " + currentClient.getNom());
-        } else {
-            messageLabel.setText("Client non trouvé. Veuillez vérifier vos informations.");
-        }
-    }
-
-    @FXML
     private void handleReservation() {
         if (currentClient == null) {
-            messageLabel.setText("Veuillez vous identifier d'abord.");
+            messageLabel.setText("Erreur: Aucun client connecté.");
             return;
         }
 

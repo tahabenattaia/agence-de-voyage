@@ -14,23 +14,20 @@ public class ClientService {
     private Connection connection;
 
     public ClientService() {
-
         this.connection = DatabaseConnection.getConnection();
-
     }
 
-    /**
-     * Crée un nouveau client dans la base de données.
-     * @param client Le client à créer
-     */
     public void createClient(Client client) {
-        String sql = "INSERT INTO client (code_cli, nom, telephone, adresse, type_client) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO client (code_cli, nom, telephone, adresse, email, password, is_admin, type_client) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, client.getCode_cli());
             pstmt.setString(2, client.getNom());
             pstmt.setString(3, client.getTelephone());
             pstmt.setString(4, client.getAdresse());
-            pstmt.setString(5, client instanceof Entreprise ? "ENTREPRISE" : "PARTICULIER");
+            pstmt.setString(5, client.getEmail());
+            pstmt.setString(6, client.getPassword());
+            pstmt.setBoolean(7, client.isAdmin());
+            pstmt.setString(8, client instanceof Entreprise ? "ENTREPRISE" : "PARTICULIER");
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
@@ -78,11 +75,6 @@ public class ClientService {
         }
     }
 
-    /**
-     * Récupère un client par son ID.
-     * @param id L'ID du client à récupérer
-     * @return Un Optional contenant le client s'il existe, sinon un Optional vide
-     */
     public Optional<Client> getClientById(Long id) {
         String sql = "SELECT c.*, e.matricule_fiscale, e.registre_commerce, p.cin " +
                 "FROM client c " +
@@ -93,23 +85,7 @@ public class ClientService {
             pstmt.setLong(1, id);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                Client client;
-                if (rs.getString("type_client").equals("ENTREPRISE")) {
-                    Entreprise entreprise = new Entreprise();
-                    entreprise.setMatriculeFiscale(rs.getString("matricule_fiscale"));
-                    entreprise.setRegistreCommerce(rs.getString("registre_commerce"));
-                    client = entreprise;
-                } else {
-                    Particulier particulier = new Particulier();
-                    particulier.setCin(rs.getString("cin"));
-                    client = particulier;
-                }
-                client.setId(rs.getLong("id"));
-                client.setCode_cli(rs.getString("code_cli"));
-                client.setNom(rs.getString("nom"));
-                client.setTelephone(rs.getString("telephone"));
-                client.setAdresse(rs.getString("adresse"));
-                return Optional.of(client);
+                return Optional.of(createClientFromResultSet(rs));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -135,13 +111,16 @@ public class ClientService {
     }
 
     public void updateClient(Client client) {
-        String sql = "UPDATE client SET code_cli = ?, nom = ?, telephone = ?, adresse = ? WHERE id = ?";
+        String sql = "UPDATE client SET code_cli = ?, nom = ?, telephone = ?, adresse = ?, email = ?, password = ?, is_admin = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, client.getCode_cli());
             pstmt.setString(2, client.getNom());
             pstmt.setString(3, client.getTelephone());
             pstmt.setString(4, client.getAdresse());
-            pstmt.setLong(5, client.getId());
+            pstmt.setString(5, client.getEmail());
+            pstmt.setString(6, client.getPassword());
+            pstmt.setBoolean(7, client.isAdmin());
+            pstmt.setLong(8, client.getId());
             pstmt.executeUpdate();
 
             if (client instanceof Entreprise) {
@@ -187,24 +166,24 @@ public class ClientService {
         }
     }
 
-    private Client createClientFromResultSet(ResultSet rs) throws SQLException {
-        Client client;
-        if (rs.getString("type_client").equals("ENTREPRISE")) {
-            Entreprise entreprise = new Entreprise();
-            entreprise.setMatriculeFiscale(rs.getString("matricule_fiscale"));
-            entreprise.setRegistreCommerce(rs.getString("registre_commerce"));
-            client = entreprise;
-        } else {
-            Particulier particulier = new Particulier();
-            particulier.setCin(rs.getString("cin"));
-            client = particulier;
+    public Optional<Client> authenticate(String email, String password) {
+        String sql = "SELECT c.*, e.matricule_fiscale, e.registre_commerce, p.cin " +
+                "FROM client c " +
+                "LEFT JOIN entreprise e ON c.id = e.id " +
+                "LEFT JOIN particulier p ON c.id = p.id " +
+                "WHERE c.email = ? AND c.password = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, email);
+            pstmt.setString(2, password);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                return Optional.of(createClientFromResultSet(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        client.setId(rs.getLong("id"));
-        client.setCode_cli(rs.getString("code_cli"));
-        client.setNom(rs.getString("nom"));
-        client.setTelephone(rs.getString("telephone"));
-        client.setAdresse(rs.getString("adresse"));
-        return client;
+        return Optional.empty();
     }
 
     public Client getClientByCodeAndNom(String code, String nom) {
@@ -224,6 +203,29 @@ public class ClientService {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private Client createClientFromResultSet(ResultSet rs) throws SQLException {
+        Client client;
+        if (rs.getString("type_client").equals("ENTREPRISE")) {
+            Entreprise entreprise = new Entreprise();
+            entreprise.setMatriculeFiscale(rs.getString("matricule_fiscale"));
+            entreprise.setRegistreCommerce(rs.getString("registre_commerce"));
+            client = entreprise;
+        } else {
+            Particulier particulier = new Particulier();
+            particulier.setCin(rs.getString("cin"));
+            client = particulier;
+        }
+        client.setId(rs.getLong("id"));
+        client.setCode_cli(rs.getString("code_cli"));
+        client.setNom(rs.getString("nom"));
+        client.setTelephone(rs.getString("telephone"));
+        client.setAdresse(rs.getString("adresse"));
+        client.setEmail(rs.getString("email"));
+        client.setPassword(rs.getString("password"));
+        client.setAdmin(rs.getBoolean("is_admin"));
+        return client;
     }
 }
 

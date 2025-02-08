@@ -8,6 +8,9 @@ public abstract class Client {
     protected String nom;
     protected String telephone;
     protected String adresse;
+    protected String email;
+    protected String password;
+    protected boolean isAdmin;
     protected Set<Reservation> reservations;
     protected Map<String, String> preferences;
 
@@ -16,12 +19,39 @@ public abstract class Client {
         this.preferences = new HashMap<>();
     }
 
-    public Client(String code_cli, String nom, String telephone, String adresse) {
+    public Client(String code_cli, String nom, String telephone, String adresse , String email, String password, boolean isAdmin) {
         this();
         this.code_cli = code_cli;
         this.nom = nom;
         this.telephone = telephone;
         this.adresse = adresse;
+        this.email = email;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
     }
 
     public Long getId() {

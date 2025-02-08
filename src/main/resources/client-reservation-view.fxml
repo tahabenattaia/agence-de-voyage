@@ -21,7 +21,7 @@
         <Label text="Nom:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
         <TextField fx:id="nomField" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
 
-        <Button text="Identifier" onAction="#handleIdentifyClient" GridPane.columnIndex="4" GridPane.rowIndex="0" 
+        <Button text="Identifier"  GridPane.columnIndex="4" GridPane.rowIndex="0"
                 style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
     </GridPane>
 
@@ -37,7 +37,7 @@
     <HBox spacing="10" alignment="CENTER">
         <Label text="Nombre de places:"/>
         <Spinner fx:id="nbPlaceSpinner" min="1" max="10" initialValue="1"/>
-        <Button text="Réserver" onAction="#handleReservation" 
+        <Button text="Réserver" onAction="#handleReservation"
                 style="-fx-background-color: #2196F3; -fx-text-fill: white;"/>
     </HBox>
 

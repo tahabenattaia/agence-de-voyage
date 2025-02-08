@@ -3,29 +3,42 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.application.Platform;
+import model.Client;
 import java.io.IOException;
 
 public class MainController {
 
     @FXML
-    private StackPane contentArea;
+    private BorderPane mainBorderPane;
 
     @FXML
     private Label statusLabel;
 
     private Stage primaryStage;
+    private Client currentClient;
 
     public void initialize() {
-        // Initialisation du contrôleur
-        updateStatus("Prêt");
+
     }
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+    }
+
+    public void setCurrentClient(Client client) {
+        this.currentClient = client;
+        updateUIWithClientInfo();
+    }
+
+    private void updateUIWithClientInfo() {
+        if (currentClient != null) {
+
+            statusLabel.setText("Connecté : " + currentClient.getNom() + (currentClient.isAdmin() ? " (Admin)" : ""));
+        }
     }
 
     @FXML
@@ -40,45 +53,48 @@ public class MainController {
 
     @FXML
     private void showReservationsView() {
-        loadView("/client-reservation-view.fxml", "Gestion des Réservations");
+        loadView("/reservation-view.fxml", "Gestion des Réservations");
     }
 
-    @FXML
-    private void showItinerairesView() {
-        loadView("/itineraire-view.fxml", "Gestion des Itinéraires");
-    }
+//    @FXML
+//    private void showAvisView() {
+//        loadView("/fxml/avis-view.fxml", "Gestion des Avis");
+//    }
 
     @FXML
-    private void showClientReservationView() {
-        loadView("/client-reservation-view.fxml", "Réservation Client");
+    private void handleLogout() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login-view.fxml"));
+            Parent loginView = loader.load();
+            Scene scene = new Scene(loginView);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Agence de Voyage - Login");
+            currentClient = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            updateStatus("Erreur lors du chargement de la vue de connexion");
+        }
     }
 
     private void loadView(String fxmlFile, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent view = loader.load();
-            contentArea.getChildren().setAll(view);
+            mainBorderPane.setCenter(view);
             updateStatus("Vue chargée : " + title);
-            primaryStage.setTitle("Gestion de Voyages - " + title);
+            if (primaryStage != null) {
+                primaryStage.setTitle("Gestion de Voyages - " + title);
+            }
         } catch (IOException e) {
             e.printStackTrace();
             updateStatus("Erreur lors du chargement de la vue : " + title);
         }
     }
 
-    @FXML
-    private void handleExit() {
-        Platform.exit();
-    }
-
-    @FXML
-    private void handleAbout() {
-        // Vous pouvez implémenter ici l'affichage d'une boîte de dialogue "À propos"
-        updateStatus("À propos de l'application");
-    }
-
     private void updateStatus(String message) {
-        statusLabel.setText(message);
+        if (statusLabel != null) {
+            statusLabel.setText(message);
+        }
     }
 }
 

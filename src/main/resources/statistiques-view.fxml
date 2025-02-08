@@ -35,7 +35,7 @@
                     <CategoryAxis label="Mois"/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="Revenus (€)"/>
+                    <NumberAxis label="Revenus (DT)"/>
                 </yAxis>
             </LineChart>
         </Tab>
