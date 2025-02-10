@@ -1,9 +1,15 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 import model.Voyage;
 import model.Client;
 import model.Reservation;
@@ -79,6 +85,21 @@ public class StatistiquesController {
                 .forEach(entry -> series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue())));
 
         revenueChart.getData().add(series);
+    }
+    @FXML
+    private void handleRetour(ActionEvent event) {
+        try {
+            // Charger l'interface principale (Main)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main-view.fxml"));
+            Parent root = loader.load();
+
+            // Obtenir la scène actuelle et la remplacer par la nouvelle
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

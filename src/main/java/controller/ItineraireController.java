@@ -1,9 +1,14 @@
 package controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.stage.Stage;
 import model.Itineraire;
 import model.Jour;
 import model.Voyage;
@@ -144,7 +149,21 @@ public class ItineraireController {
         clearFields();
         messageLabel.setText("Jour supprimé avec succès.");
     }
+    @FXML
+    private void handleRetour(ActionEvent event) {
+        try {
+            // Charger l'interface principale (Main)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main-view.fxml"));
+            Parent root = loader.load();
 
+            // Obtenir la scène actuelle et la remplacer par la nouvelle
+            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     private void clearFields() {
         jourField.clear();
         descriptionArea.clear();

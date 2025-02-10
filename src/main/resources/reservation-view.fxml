@@ -4,12 +4,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="controller.ClientReservationController" style="-fx-background-color: white;">
 
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" style="-fx-background-color: #1a73e8; -fx-padding: 15 20; -fx-spacing: 10;">
         <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;" text="Gestion des Réservations" />
+        <Region HBox.hgrow="ALWAYS" />
+
+        <Button style="-fx-background-color: transparent;" onAction="#handleRetour">
+            <graphic>
+                <ImageView fitHeight="33.0" fitWidth="42.0" preserveRatio="true">
+                    <image>
+                        <Image url="@images/retour.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
+
     </HBox>
 
     <!-- Form Container -->
