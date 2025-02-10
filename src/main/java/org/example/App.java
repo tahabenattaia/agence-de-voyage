@@ -21,6 +21,8 @@ public class App extends Application {
         controller.setPrimaryStage(stage);
 
         Scene scene = new Scene(root, 800, 600);
+
+
         stage.setTitle("Agence de Voyage");
         stage.setScene(scene);
         stage.show();

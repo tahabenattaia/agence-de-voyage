@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.PasswordField?>
 <VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClientController">
     <padding>
         <Insets bottom="20" left="20" right="20" top="20" />
@@ -38,6 +39,12 @@
 
         <Label text="Détails spécifiques:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
         <TextField fx:id="detailsField" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+
+        <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+        <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+        <Label text="Mot de passe:" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+        <PasswordField fx:id="passwordField" GridPane.columnIndex="3" GridPane.rowIndex="3" />
       <columnConstraints>
          <ColumnConstraints />
          <ColumnConstraints />
@@ -65,6 +72,7 @@
             <TableColumn fx:id="telephoneColumn" prefWidth="82.4000244140625" text="Téléphone" />
             <TableColumn fx:id="adresseColumn" prefWidth="91.20001220703125" text="Adresse" />
             <TableColumn fx:id="typeColumn" prefWidth="83.199951171875" text="Type" />
+            <TableColumn fx:id="emailColumn" prefWidth="120" text="Email" />
         </columns>
     </TableView>
 </VBox>

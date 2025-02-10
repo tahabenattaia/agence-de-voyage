@@ -14,8 +14,8 @@ public class Particulier extends Client {
     }
 
     public Particulier(String code_cli, String nom, String telephone, String adresse,
-                       String cin) {
-        super(code_cli, nom, telephone, adresse);
+                       String cin,String email , String password) {
+        super(code_cli, nom, telephone, adresse ,password ,email);
         this.cin = cin;
         this.documentsIdentite = new HashSet<>();
         this.documentsIdentite.add(cin);

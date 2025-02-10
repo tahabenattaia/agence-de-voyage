@@ -26,6 +26,10 @@ public class ClientController {
     @FXML private TableColumn<Client, String> telephoneColumn;
     @FXML private TableColumn<Client, String> adresseColumn;
     @FXML private TableColumn<Client, String> typeColumn;
+    @FXML private TextField emailField;
+    @FXML private PasswordField passwordField;
+    @FXML private TableColumn<Client, String> emailColumn;
+
 
     private ClientService clientService;
     private ObservableList<Client> clientList;
@@ -34,7 +38,6 @@ public class ClientController {
         clientService = new ClientService();
         clientList = FXCollections.observableArrayList();
         typeClientCombo.getItems().addAll("Entreprise", "Particulier");
-
         setupTableColumns();
         loadClients();
 
@@ -50,7 +53,10 @@ public class ClientController {
         nomColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNom()));
         telephoneColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelephone()));
         adresseColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAdresse()));
+        emailColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
         typeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue() instanceof Entreprise ? "Entreprise" : "Particulier"));
+
+
     }
 
     private void loadClients() {
@@ -67,6 +73,10 @@ public class ClientController {
         String adresse = adresseField.getText();
         String type = typeClientCombo.getValue();
         String details = detailsField.getText();
+        String email = emailField.getText();
+        String password = passwordField.getText();
+
+
 
         Client newClient;
         if ("Entreprise".equals(type)) {
@@ -83,6 +93,8 @@ public class ClientController {
         newClient.setNom(nom);
         newClient.setTelephone(telephone);
         newClient.setAdresse(adresse);
+        newClient.setEmail(email);
+        newClient.setPassword(password);
 
         clientService.createClient(newClient);
         loadClients();
@@ -97,6 +109,9 @@ public class ClientController {
             selectedClient.setNom(nomField.getText());
             selectedClient.setTelephone(telephoneField.getText());
             selectedClient.setAdresse(adresseField.getText());
+            selectedClient.setEmail(emailField.getText());
+            selectedClient.setPassword(passwordField.getText());
+
 
             String type = typeClientCombo.getValue();
             String details = detailsField.getText();
@@ -106,7 +121,7 @@ public class ClientController {
             } else if (selectedClient instanceof Particulier && "Particulier".equals(type)) {
                 ((Particulier) selectedClient).setCin(details);
             } else {
-                // Le type a changé, nous devons créer un nouveau client
+
                 Client newClient;
                 if ("Entreprise".equals(type)) {
                     Entreprise entreprise = new Entreprise();
@@ -122,6 +137,8 @@ public class ClientController {
                 newClient.setNom(selectedClient.getNom());
                 newClient.setTelephone(selectedClient.getTelephone());
                 newClient.setAdresse(selectedClient.getAdresse());
+                newClient.setEmail(selectedClient.getEmail());
+                newClient.setPassword(selectedClient.getPassword());
                 selectedClient = newClient;
             }
 
@@ -151,6 +168,9 @@ public class ClientController {
         nomField.setText(client.getNom());
         telephoneField.setText(client.getTelephone());
         adresseField.setText(client.getAdresse());
+        emailField.setText(client.getEmail());
+        passwordField.setText(client.getPassword());
+
 
         if (client instanceof Entreprise) {
             typeClientCombo.setValue("Entreprise");
@@ -168,6 +188,9 @@ public class ClientController {
         adresseField.clear();
         typeClientCombo.getSelectionModel().clearSelection();
         detailsField.clear();
+        emailField.clear();
+        passwordField.clear();
+
     }
 }
 

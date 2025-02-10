@@ -15,8 +15,8 @@ public class Entreprise extends Client {
     }
 
     public Entreprise(String code_cli, String nom, String telephone, String adresse,
-                      String matriculeFiscale, String registreCommerce) {
-        super(code_cli, nom, telephone, adresse);
+                      String matriculeFiscale, String registreCommerce, String password , String email) {
+        super(code_cli, nom, telephone, adresse ,password ,email);
         this.matriculeFiscale = matriculeFiscale;
         this.registreCommerce = registreCommerce;
         this.contactsSecondaires = new ArrayList<>();

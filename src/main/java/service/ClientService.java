@@ -19,18 +19,18 @@ public class ClientService {
 
     }
 
-    /**
-     * Crée un nouveau client dans la base de données.
-     * @param client Le client à créer
-     */
+
     public void createClient(Client client) {
-        String sql = "INSERT INTO client (code_cli, nom, telephone, adresse, type_client) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO client (code_cli, nom, telephone, adresse, email, password, type_client) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, client.getCode_cli());
             pstmt.setString(2, client.getNom());
             pstmt.setString(3, client.getTelephone());
             pstmt.setString(4, client.getAdresse());
-            pstmt.setString(5, client instanceof Entreprise ? "ENTREPRISE" : "PARTICULIER");
+            pstmt.setString(5, client.getEmail());
+            pstmt.setString(6, client.getPassword());
+            pstmt.setString(7, client instanceof Entreprise ? "ENTREPRISE" : "PARTICULIER");
+
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
@@ -78,11 +78,7 @@ public class ClientService {
         }
     }
 
-    /**
-     * Récupère un client par son ID.
-     * @param id L'ID du client à récupérer
-     * @return Un Optional contenant le client s'il existe, sinon un Optional vide
-     */
+
     public Optional<Client> getClientById(Long id) {
         String sql = "SELECT c.*, e.matricule_fiscale, e.registre_commerce, p.cin " +
                 "FROM client c " +
@@ -109,6 +105,9 @@ public class ClientService {
                 client.setNom(rs.getString("nom"));
                 client.setTelephone(rs.getString("telephone"));
                 client.setAdresse(rs.getString("adresse"));
+                client.setEmail(rs.getString("email"));
+                client.setPassword(rs.getString("password"));
+
                 return Optional.of(client);
             }
         } catch (SQLException e) {
@@ -135,13 +134,17 @@ public class ClientService {
     }
 
     public void updateClient(Client client) {
-        String sql = "UPDATE client SET code_cli = ?, nom = ?, telephone = ?, adresse = ? WHERE id = ?";
+        String sql = "UPDATE client SET code_cli = ?, nom = ?, telephone = ?, adresse = ?, email = ?, password = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, client.getCode_cli());
             pstmt.setString(2, client.getNom());
             pstmt.setString(3, client.getTelephone());
             pstmt.setString(4, client.getAdresse());
-            pstmt.setLong(5, client.getId());
+            pstmt.setString(5, client.getEmail());
+            pstmt.setString(6, client.getPassword());
+            pstmt.setLong(7, client.getId());
+
+
             pstmt.executeUpdate();
 
             if (client instanceof Entreprise) {
@@ -204,6 +207,8 @@ public class ClientService {
         client.setNom(rs.getString("nom"));
         client.setTelephone(rs.getString("telephone"));
         client.setAdresse(rs.getString("adresse"));
+        client.setPassword(rs.getString("password"));
+        client.setPassword(rs.getString("email"));
         return client;
     }
 
