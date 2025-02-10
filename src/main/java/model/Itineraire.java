@@ -13,6 +13,13 @@ public class Itineraire {
         this.pointsInteret = new HashMap<>();
         this.activites = new HashSet<>();
     }
+    public List<Jour> getJours() {
+        return jours; // Return the modifiable list directly
+    }
+
+    public void removeJour(Jour jour) {
+        this.jours.remove(jour);
+    }
 
     public Long getId() {
         return id;
@@ -22,9 +29,6 @@ public class Itineraire {
         this.id = id;
     }
 
-    public List<Jour> getJours() {
-        return Collections.unmodifiableList(jours);
-    }
 
     public void ajouterJour(Jour jour) {
         this.jours.add(jour);

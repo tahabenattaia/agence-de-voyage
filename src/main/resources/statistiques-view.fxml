@@ -5,40 +5,45 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="controller.StatistiquesController"
-      spacing="20" alignment="CENTER">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+<VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.StatistiquesController" style="-fx-background-color: white;">
 
-    <Label text="Statistiques" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" style="-fx-background-color: #1a73e8; -fx-padding: 15 20; -fx-spacing: 10;">
+        <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;" text="Statistiques" />
+    </HBox>
 
-    <TabPane VBox.vgrow="ALWAYS">
-        <Tab text="Top Destinations">
-            <BarChart fx:id="topDestinationsChart">
+    <!-- Main Content -->
+    <TabPane VBox.vgrow="ALWAYS" style="-fx-background-color: white; -fx-border-color: #e0e0e0;
+                                        -fx-border-radius: 5; -fx-background-radius: 5;
+                                        -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+        <Tab text="Top Destinations" style="-fx-background-color: #f8f9fa; -fx-text-base-color: #333333;">
+            <BarChart fx:id="topDestinationsChart" style="-fx-background-color: white;">
                 <xAxis>
-                    <CategoryAxis label="Destinations"/>
+                    <CategoryAxis label="Destinations" style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="Nombre de réservations"/>
+                    <NumberAxis label="Nombre de réservations" style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
                 </yAxis>
             </BarChart>
         </Tab>
-        <Tab text="Types de Clients">
-            <PieChart fx:id="clientTypeChart"/>
+        <Tab text="Types de Clients" style="-fx-background-color: #f8f9fa; -fx-text-base-color: #333333;">
+            <PieChart fx:id="clientTypeChart" style="-fx-background-color: white;"/>
         </Tab>
-        <Tab text="Revenus">
-            <LineChart fx:id="revenueChart">
+        <Tab text="Revenus" style="-fx-background-color: #f8f9fa; -fx-text-base-color: #333333;">
+            <LineChart fx:id="revenueChart" style="-fx-background-color: white;">
                 <xAxis>
-                    <CategoryAxis label="Mois"/>
+                    <CategoryAxis label="Mois" style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="Revenus (€)"/>
+                    <NumberAxis label="Revenus (€)" style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
                 </yAxis>
             </LineChart>
         </Tab>
     </TabPane>
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
 </VBox>
 

@@ -132,10 +132,15 @@ public class ItineraireController {
             return;
         }
 
-        currentItineraire.getJours().remove(selectedJour);
+        // Remove the jour from the currentItineraire
+        currentItineraire.removeJour(selectedJour);
+
+        // Update the itineraire in the database
         itineraireService.updateItineraire(currentItineraire);
 
+        // Remove the jour from the observable list
         jourList.remove(selectedJour);
+
         clearFields();
         messageLabel.setText("Jour supprimé avec succès.");
     }
