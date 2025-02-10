@@ -5,11 +5,11 @@
 <?import javafx.scene.layout.*?>
 
 <VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="controller.ClientController" style="-fx-background-color: white;">
+      fx:controller="controller.VoyageController" style="-fx-background-color: white;">
 
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" style="-fx-background-color: #1a73e8; -fx-padding: 15 20; -fx-spacing: 10;">
-        <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;" text="Gestion des Clients" />
+        <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;" text="Gestion des Voyages" />
     </HBox>
 
     <!-- Form Container -->
@@ -18,46 +18,52 @@
             -fx-background-radius: 8; -fx-border-radius: 8;">
         <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
 
-        <Label text="Code Client:" GridPane.columnIndex="0" GridPane.rowIndex="0"
+        <Label text="Référence:" GridPane.columnIndex="0" GridPane.rowIndex="0"
                style="-fx-text-fill: #666666; -fx-font-size: 14;" />
-        <TextField fx:id="codeClientField" GridPane.columnIndex="1" GridPane.rowIndex="0"
+        <TextField fx:id="referenceField" GridPane.columnIndex="1" GridPane.rowIndex="0"
                    style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" />
 
-        <Label text="Nom:" GridPane.columnIndex="2" GridPane.rowIndex="0"
+        <Label text="Destination:" GridPane.columnIndex="2" GridPane.rowIndex="0"
                style="-fx-text-fill: #666666; -fx-font-size: 14;" />
-        <TextField fx:id="nomField" GridPane.columnIndex="3" GridPane.rowIndex="0"
+        <TextField fx:id="destinationField" GridPane.columnIndex="3" GridPane.rowIndex="0"
                    style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" />
 
-        <Label text="Téléphone:" GridPane.columnIndex="0" GridPane.rowIndex="1"
+        <Label text="Prix:" GridPane.columnIndex="0" GridPane.rowIndex="1"
                style="-fx-text-fill: #666666; -fx-font-size: 14;" />
-        <TextField fx:id="telephoneField" GridPane.columnIndex="1" GridPane.rowIndex="1"
+        <TextField fx:id="prixField" GridPane.columnIndex="1" GridPane.rowIndex="1"
                    style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" />
 
-        <Label text="Adresse:" GridPane.columnIndex="2" GridPane.rowIndex="1"
+        <Label text="Date de départ:" GridPane.columnIndex="2" GridPane.rowIndex="1"
                style="-fx-text-fill: #666666; -fx-font-size: 14;" />
-        <TextField fx:id="adresseField" GridPane.columnIndex="3" GridPane.rowIndex="1"
-                   style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" />
+        <DatePicker fx:id="dateDepartPicker" GridPane.columnIndex="3" GridPane.rowIndex="1"
+                    style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
 
-        <Label text="Type:" GridPane.columnIndex="0" GridPane.rowIndex="2"
+        <Label text="Date de retour:" GridPane.columnIndex="0" GridPane.rowIndex="2"
                style="-fx-text-fill: #666666; -fx-font-size: 14;" />
-        <ComboBox fx:id="typeClientCombo" GridPane.columnIndex="1" GridPane.rowIndex="2"
-                  style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 5;" />
+        <DatePicker fx:id="dateRetourPicker" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                    style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
 
-        <Label text="Détails spécifiques:" GridPane.columnIndex="2" GridPane.rowIndex="2"
+        <Label text="Type:" GridPane.columnIndex="2" GridPane.rowIndex="2"
                style="-fx-text-fill: #666666; -fx-font-size: 14;" />
-        <TextField fx:id="detailsField" GridPane.columnIndex="3" GridPane.rowIndex="2"
-                   style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" />
+        <ComboBox fx:id="typeVoyageCombo" GridPane.columnIndex="3" GridPane.rowIndex="2"
+                  style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+
+        <Label text="Descriptif:" GridPane.columnIndex="0" GridPane.rowIndex="3"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <TextArea fx:id="descriptifArea" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="3"
+                  prefRowCount="3" promptText="Descriptif"
+                  style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" />
     </GridPane>
 
     <!-- Buttons Container -->
     <HBox alignment="CENTER" spacing="15" style="-fx-padding: 10 0 20 0;">
-        <Button onAction="#handleCreateClient" text="Créer"
+        <Button onAction="#handleCreateVoyage" text="Créer"
                 style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold;
                        -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" />
-        <Button onAction="#handleUpdateClient" text="Mettre à jour"
+        <Button onAction="#handleUpdateVoyage" text="Mettre à jour"
                 style="-fx-background-color: #ffb700; -fx-text-fill: white; -fx-font-weight: bold;
                        -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" />
-        <Button onAction="#handleDeleteClient" text="Supprimer"
+        <Button onAction="#handleDeleteVoyage" text="Supprimer"
                 style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold;
                        -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" />
         <Button onAction="#handleClearFields" text="Effacer les champs"
@@ -66,17 +72,19 @@
     </HBox>
 
     <!-- Table -->
-    <TableView fx:id="clientTable" VBox.vgrow="ALWAYS"
+    <TableView fx:id="voyageTable" VBox.vgrow="ALWAYS"
                style="-fx-background-color: white; -fx-border-color: #e0e0e0;
                       -fx-border-radius: 5; -fx-background-radius: 5;
                       -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
         <columns>
-            <TableColumn fx:id="codeClientColumn" text="Code Client" style="-fx-alignment: CENTER;"/>
-            <TableColumn fx:id="nomColumn" text="Nom" style="-fx-alignment: CENTER;"/>
-            <TableColumn fx:id="telephoneColumn" text="Téléphone" style="-fx-alignment: CENTER;"/>
-            <TableColumn fx:id="adresseColumn" text="Adresse" style="-fx-alignment: CENTER;"/>
+            <TableColumn fx:id="referenceColumn" text="Référence" style="-fx-alignment: CENTER;"/>
+            <TableColumn fx:id="destinationColumn" text="Destination" style="-fx-alignment: CENTER;"/>
+            <TableColumn fx:id="prixColumn" text="Prix" style="-fx-alignment: CENTER;"/>
+            <TableColumn fx:id="dateDepartColumn" text="Date de départ" style="-fx-alignment: CENTER;"/>
+            <TableColumn fx:id="dateRetourColumn" text="Date de retour" style="-fx-alignment: CENTER;"/>
             <TableColumn fx:id="typeColumn" text="Type" style="-fx-alignment: CENTER;"/>
         </columns>
         <padding><Insets bottom="5"/></padding>
     </TableView>
 </VBox>
+

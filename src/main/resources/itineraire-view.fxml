@@ -1,61 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.geometry.Insets?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="controller.ItineraireController"
-      spacing="10" alignment="CENTER">
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+<VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.ItineraireController" style="-fx-background-color: white;">
 
-    <Label text="Gestion des Itinéraires" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
-
-    <HBox spacing="10" alignment="CENTER">
-        <Label text="Sélectionner un voyage:"/>
-        <ComboBox fx:id="voyageComboBox" prefWidth="200"/>
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" style="-fx-background-color: #1a73e8; -fx-padding: 15 20; -fx-spacing: 10;">
+        <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;" text="Gestion des Itinéraires" />
     </HBox>
 
-    <TableView fx:id="jourTable" VBox.vgrow="ALWAYS">
-        <columns>
-            <TableColumn text="Jour" fx:id="jourColumn" prefWidth="100"/>
-            <TableColumn text="Description" fx:id="descriptionColumn" prefWidth="300"/>
-        </columns>
-    </TableView>
+    <!-- Form Container -->
+    <GridPane hgap="15" vgap="15" style="-fx-background-color: white; -fx-padding: 20;
+            -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+            -fx-background-radius: 8; -fx-border-radius: 8;">
+        <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
 
-    <GridPane hgap="10" vgap="10">
-        <Label text="Jour:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-        <TextField fx:id="jourField" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+        <Label text="Sélectionner un voyage:" GridPane.columnIndex="0" GridPane.rowIndex="0"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <ComboBox fx:id="voyageComboBox" GridPane.columnIndex="1" GridPane.rowIndex="0" prefWidth="200"
+                  style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 5;" />
 
-        <Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-        <TextArea fx:id="descriptionArea" GridPane.columnIndex="1" GridPane.rowIndex="1" prefRowCount="3"/>
+        <Label text="Jour:" GridPane.columnIndex="0" GridPane.rowIndex="1"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <TextField fx:id="jourField" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                   style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" />
+
+        <Label text="Description:" GridPane.columnIndex="0" GridPane.rowIndex="2"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <TextArea fx:id="descriptionArea" GridPane.columnIndex="1" GridPane.rowIndex="2" prefRowCount="3"
+                  style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" />
     </GridPane>
 
-    <HBox spacing="10" alignment="CENTER">
-        <Button text="Ajouter Jour" fx:id="ajouterJourButton" onAction="#handleAjouterJour"
-                style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
-        <Button text="Modifier Jour" fx:id="modifierJourButton" onAction="#handleModifierJour"
-                style="-fx-background-color: #FFC107; -fx-text-fill: white;"/>
-        <Button text="Supprimer Jour" fx:id="supprimerJourButton" onAction="#handleSupprimerJour"
-                style="-fx-background-color: #F44336; -fx-text-fill: white;"/>
+    <!-- Buttons Container -->
+    <HBox alignment="CENTER" spacing="15" style="-fx-padding: 10 0 20 0;">
+        <Button fx:id="ajouterJourButton" onAction="#handleAjouterJour" text="Ajouter Jour"
+                style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold;
+                       -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" />
+        <Button fx:id="modifierJourButton" onAction="#handleModifierJour" text="Modifier Jour"
+                style="-fx-background-color: #ffb700; -fx-text-fill: white; -fx-font-weight: bold;
+                       -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" />
+        <Button fx:id="supprimerJourButton" onAction="#handleSupprimerJour" text="Supprimer Jour"
+                style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold;
+                       -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" />
     </HBox>
 
-    <Label fx:id="messageLabel" style="-fx-font-style: italic;"/>
+    <!-- Table -->
+    <TableView fx:id="jourTable" VBox.vgrow="ALWAYS"
+               style="-fx-background-color: white; -fx-border-color: #e0e0e0;
+                      -fx-border-radius: 5; -fx-background-radius: 5;
+                      -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+        <columns>
+            <TableColumn fx:id="jourColumn" text="Jour" prefWidth="100" style="-fx-alignment: CENTER;"/>
+            <TableColumn fx:id="descriptionColumn" text="Description" prefWidth="300" style="-fx-alignment: CENTER;"/>
+        </columns>
+        <padding><Insets bottom="5"/></padding>
+    </TableView>
+
+    <Label fx:id="messageLabel" style="-fx-font-style: italic; -fx-text-fill: #666666;"/>
 </VBox>
-
-
-
-
-
-
-
-
-
-
-
-
-
-

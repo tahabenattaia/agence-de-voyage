@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Itineraire {
     private Long id;
-    private List<Jour> jours = new ArrayList<>();
+    private List<Jour> jours ;
     private Map<Integer, String> pointsInteret;
     private Set<String> activites;
 
@@ -12,6 +12,13 @@ public class Itineraire {
         this.jours = new ArrayList<>();
         this.pointsInteret = new HashMap<>();
         this.activites = new HashSet<>();
+    }
+    public List<Jour> getJours() {
+        return jours; // Return the modifiable list directly
+    }
+
+    public void removeJour(Jour jour) {
+        this.jours.remove(jour);
     }
 
     public Long getId() {
@@ -22,9 +29,6 @@ public class Itineraire {
         this.id = id;
     }
 
-    public List<Jour> getJours() {
-        return Collections.unmodifiableList(jours);
-    }
 
     public void ajouterJour(Jour jour) {
         this.jours.add(jour);

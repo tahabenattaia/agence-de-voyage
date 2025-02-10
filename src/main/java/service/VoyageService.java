@@ -13,17 +13,17 @@ import java.util.Optional;
 public class VoyageService {
     private Connection connection;
 
-    // Constructeur : Initialise la connexion à la base de données
     public VoyageService() {
         this.connection = DatabaseConnection.getConnection();
+        if (this.connection == null) {
+            throw new RuntimeException("Impossible d'établir une connexion à la base de données.");
+        }
     }
 
-    // Crée un nouveau voyage et insère ses détails dans la base de données
     public void createVoyage(Voyage voyage) {
         String sql = "INSERT INTO voyage (reference, prix_par_personne, destination, descriptif, date_depart, date_retour, type_voyage) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            // Remplissage des paramètres de la requête
             pstmt.setString(1, voyage.getReference());
             pstmt.setInt(2, voyage.getPrixParPersonne());
             pstmt.setString(3, voyage.getDestination());
@@ -34,25 +34,24 @@ public class VoyageService {
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("Creating voyage failed, no rows affected.");
+                throw new SQLException("La création du voyage a échoué, aucune ligne affectée.");
             }
 
-            // Récupération de l'ID généré
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     voyage.setId(generatedKeys.getLong(1));
                 } else {
-                    throw new SQLException("Creating voyage failed, no ID obtained.");
+                    throw new SQLException("La création du voyage a échoué, aucun ID obtenu.");
                 }
             }
 
-            // Insérer les informations spécifiques à chaque type de voyage
             if (voyage instanceof VoyageOrganise) {
                 createVoyageOrganise((VoyageOrganise) voyage);
             } else if (voyage instanceof VoyagePersonnalise) {
                 createVoyagePersonnalise((VoyagePersonnalise) voyage);
             }
         } catch (SQLException e) {
+            System.err.println("Erreur lors de la création du voyage : " + e.getMessage());
             e.printStackTrace();
         }
     }

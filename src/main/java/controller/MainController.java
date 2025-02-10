@@ -30,27 +30,27 @@ public class MainController {
 
     @FXML
     private void showVoyagesView() {
-        loadView("/fxml/voyage-view.fxml", "Gestion des Voyages");
+        loadView("/voyage-view.fxml", "Gestion des Voyages");
     }
 
     @FXML
     private void showClientsView() {
-        loadView("/fxml/client-view.fxml", "Gestion des Clients");
+        loadView("/client-view.fxml", "Gestion des Clients");
     }
 
     @FXML
     private void showReservationsView() {
-        loadView("/fxml/reservation-view.fxml", "Gestion des Réservations");
+        loadView("/client-reservation-view.fxml", "Gestion des Réservations");
     }
 
     @FXML
     private void showItinerairesView() {
-        loadView("/fxml/itineraire-view.fxml", "Gestion des Itinéraires");
+        loadView("/itineraire-view.fxml", "Gestion des Itinéraires");
     }
 
     @FXML
     private void showClientReservationView() {
-        loadView("/fxml/client-reservation-view.fxml", "Réservation Client");
+        loadView("/client-reservation-view.fxml", "Réservation Client");
     }
 
     private void loadView(String fxmlFile, String title) {

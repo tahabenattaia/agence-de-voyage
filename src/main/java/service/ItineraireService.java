@@ -177,6 +177,7 @@ public class ItineraireService {
         }
     }
 
+
     private void deleteJour(Long id) {
         String sql = "DELETE FROM jour WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {

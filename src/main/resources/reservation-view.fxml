@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.ClientReservationController" style="-fx-background-color: white;">
+
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" style="-fx-background-color: #1a73e8; -fx-padding: 15 20; -fx-spacing: 10;">
+        <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;" text="Gestion des Réservations" />
+    </HBox>
+
+    <!-- Form Container -->
+    <GridPane hgap="15" vgap="15" style="-fx-background-color: white; -fx-padding: 20;
+            -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+            -fx-background-radius: 8; -fx-border-radius: 8;">
+        <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+        <Label text="ID Réservation:" GridPane.columnIndex="0" GridPane.rowIndex="0"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <TextField fx:id="idReservationField" GridPane.columnIndex="1" GridPane.rowIndex="0" editable="false"
+                   style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" />
+
+        <Label text="Client:" GridPane.columnIndex="2" GridPane.rowIndex="0"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <ComboBox fx:id="clientCombo" GridPane.columnIndex="3" GridPane.rowIndex="0"
+                  style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+
+        <Label text="Voyage:" GridPane.columnIndex="0" GridPane.rowIndex="1"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <ComboBox fx:id="voyageCombo" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                  style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+
+        <Label text="Date de réservation:" GridPane.columnIndex="2" GridPane.rowIndex="1"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <DatePicker fx:id="dateReservationPicker" GridPane.columnIndex="3" GridPane.rowIndex="1"
+                    style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+
+        <Label text="Nombre de places:" GridPane.columnIndex="0" GridPane.rowIndex="2"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <Spinner fx:id="nbPlaceSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                 style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+
+        <Label text="Statut:" GridPane.columnIndex="2" GridPane.rowIndex="2"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <ComboBox fx:id="statutCombo" GridPane.columnIndex="3" GridPane.rowIndex="2"
+                  style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+
+        <Label text="Commentaires:" GridPane.columnIndex="0" GridPane.rowIndex="3"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <TextArea fx:id="commentairesArea" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="3"
+                  prefRowCount="3" promptText="Commentaires"
+                  style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" />
+    </GridPane>
+
+    <!-- Buttons Container -->
+    <HBox alignment="CENTER" spacing="15" style="-fx-padding: 10 0 20 0;">
+        <Button onAction="#handleReservation" text="Créer"
+                style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold;
+                       -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" />
+        <Button onAction="#handleUpdateReservation" text="Mettre à jour"
+                style="-fx-background-color: #ffb700; -fx-text-fill: white; -fx-font-weight: bold;
+                       -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" />
+        <Button onAction="#handleDeleteReservation" text="Supprimer"
+                style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold;
+                       -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" />
+        <Button onAction="#handleClearFields" text="Effacer les champs"
+                style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold;
+                       -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" />
+    </HBox>
+
+    <!-- Table -->
+    <TableView fx:id="reservationTable" VBox.vgrow="ALWAYS"
+               style="-fx-background-color: white; -fx-border-color: #e0e0e0;
+                      -fx-border-radius: 5; -fx-background-radius: 5;
+                      -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+        <columns>
+            <TableColumn fx:id="idReservationColumn" text="ID Réservation" style="-fx-alignment: CENTER;"/>
+            <TableColumn fx:id="clientColumn" text="Client" style="-fx-alignment: CENTER;"/>
+            <TableColumn fx:id="voyageColumn" text="Voyage" style="-fx-alignment: CENTER;"/>
+            <TableColumn fx:id="dateReservationColumn" text="Date de réservation" style="-fx-alignment: CENTER;"/>
+            <TableColumn fx:id="nbPlaceColumn" text="Nombre de places" style="-fx-alignment: CENTER;"/>
+            <TableColumn fx:id="statutColumn" text="Statut" style="-fx-alignment: CENTER;"/>
+        </columns>
+        <padding><Insets bottom="5"/></padding>
+    </TableView>
+</VBox>
+
