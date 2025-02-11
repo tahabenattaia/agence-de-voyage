@@ -62,19 +62,30 @@ public class VoyageService {
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setLong(1, voyage.getId());
             pstmt.setInt(2, voyage.getNbPlaceMaxi());
-            pstmt.setDate(3, new java.sql.Date(voyage.getDateValidite().getTime()));
+            // Vérifier si la date de validité est renseignée
+            if (voyage.getDateValidite() != null) {
+                pstmt.setDate(3, new java.sql.Date(voyage.getDateValidite().getTime()));
+            } else {
+                // Si elle est nulle, on insère une valeur SQL NULL
+                pstmt.setNull(3, java.sql.Types.DATE);
+            }
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+
     // Insère un voyage personnalisé dans la base de données
     private void createVoyagePersonnalise(VoyagePersonnalise voyage) {
         String sql = "INSERT INTO voyage_personnalise (id, preference) VALUES (?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setLong(1, voyage.getId());
-            pstmt.setString(2, voyage.getPreference());
+            if (voyage.getPreference() != null) {
+                pstmt.setString(2, voyage.getPreference());
+            } else {
+                pstmt.setNull(2, java.sql.Types.VARCHAR);
+            }
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

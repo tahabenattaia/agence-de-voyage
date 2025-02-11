@@ -42,4 +42,3 @@ public class VoyagePersonnalise extends Voyage {
         this.optionsPersonnalisees.remove(option);
     }
 }
-

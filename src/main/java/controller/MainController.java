@@ -40,7 +40,7 @@ public class MainController {
 
     @FXML
     private void showReservationsView() {
-        loadView("/client-reservation-view.fxml", "Gestion des Réservations");
+        loadView("/reservation-view.fxml", "Gestion des Réservations");
     }
 
     @FXML
@@ -65,7 +65,10 @@ public class MainController {
             updateStatus("Erreur lors du chargement de la vue : " + title);
         }
     }
-
+    @FXML
+    private void showClientReservationsView() {
+        loadView( "/client-reservation-view.fxml", "Gestion des Réservations");
+    }
     @FXML
     private void handleExit() {
         Platform.exit();

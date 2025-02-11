@@ -53,6 +53,7 @@ CREATE TABLE reservation (
     nb_place INT NOT NULL,
     id_voyage BIGINT,
     id_client BIGINT,
+    status varchar(20) DEFAULT 'EN_ATTENTE',
     FOREIGN KEY (id_voyage) REFERENCES voyage(id),
     FOREIGN KEY (id_client) REFERENCES client(id)
 );
