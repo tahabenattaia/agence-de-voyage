@@ -67,7 +67,7 @@ public class MainController {
     }
     @FXML
     private void showClientReservationsView() {
-        loadView( "/client-reservation-view.fxml", "Gestion des Réservations");
+        loadView( "/client-reservation-view.fxml", "Gestion des Réservations cients ");
     }
     @FXML
     private void handleExit() {

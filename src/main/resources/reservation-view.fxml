@@ -24,6 +24,54 @@
         </Button>
     </HBox>
 
+    <GridPane hgap="15" vgap="15" style="-fx-background-color: white; -fx-padding: 20;
+            -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+            -fx-background-radius: 8; -fx-border-radius: 8;">
+        <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+        <Label text="ID Réservation:" GridPane.columnIndex="0" GridPane.rowIndex="0"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <TextField fx:id="idAdminReservationField" GridPane.columnIndex="1" GridPane.rowIndex="0" editable="false"
+                   style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" />
+
+        <Label text="Client:" GridPane.columnIndex="2" GridPane.rowIndex="0"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <ComboBox fx:id="clientCombo" GridPane.columnIndex="3" GridPane.rowIndex="0"
+                  style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+
+        <Label text="Voyage:" GridPane.columnIndex="0" GridPane.rowIndex="1"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <ComboBox fx:id="voyageCombo" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                  style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+
+        <Label text="Date de réservation:" GridPane.columnIndex="2" GridPane.rowIndex="1"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <DatePicker fx:id="dateReservationPicker" GridPane.columnIndex="3" GridPane.rowIndex="1"
+                    style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+
+        <Label text="Nombre de places:" GridPane.columnIndex="0" GridPane.rowIndex="2"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <Spinner fx:id="nbPlaceSpinner" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                 style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+
+        <Label text="Statut:" GridPane.columnIndex="2" GridPane.rowIndex="2"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <ComboBox fx:id="statutCombo" GridPane.columnIndex="3" GridPane.rowIndex="2"
+                  style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+
+
+
+    </GridPane>
+
+
+
+
+
+
+
+
+
+
     <!-- Table -->
     <TableView fx:id="reservationTable" VBox.vgrow="ALWAYS"
                style="-fx-background-color: white; -fx-border-color: #e0e0e0;

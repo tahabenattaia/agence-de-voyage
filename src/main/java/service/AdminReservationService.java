@@ -37,7 +37,7 @@ public class AdminReservationService {
 
 
     public void updateReservation(AdminReservation reservation) {
-        String sql = "UPDATE reservation SET id_client = ?, voyage_id = ?, date_reservation = ?, nb_place = ?, status = ? WHERE id = ?";
+        String sql = "UPDATE reservation SET id_client = ?, id_voyage = ?, date_reservation = ?, nb_place = ?, status = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setLong(1, reservation.getClient().getId());
             pstmt.setLong(2, reservation.getVoyage().getId());
