@@ -131,29 +131,120 @@ public class VoyageService {
 
     // Met à jour les informations d'un voyage
     public void updateVoyage(Voyage voyage) {
-        String sql = "UPDATE voyage SET reference = ?, prix_par_personne = ?, destination = ?, " +
+        // Met à jour les informations de base dans la table voyage
+        String updateVoyageSql = "UPDATE voyage SET reference = ?, prix_par_personne = ?, destination = ?, " +
                 "descriptif = ?, date_depart = ?, date_retour = ? WHERE id = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setString(1, voyage.getReference());
-            pstmt.setInt(2, voyage.getPrixParPersonne());
-            pstmt.setString(3, voyage.getDestination());
-            pstmt.setString(4, voyage.getDescriptif());
-            pstmt.setDate(5, new java.sql.Date(voyage.getDateDepart().getTime()));
-            pstmt.setDate(6, new java.sql.Date(voyage.getDateRetour().getTime()));
-            pstmt.setLong(7, voyage.getId());
-            pstmt.executeUpdate();
+
+        // Met à jour les informations spécifiques pour les voyages organisés
+        String updateOrganiseSql = "UPDATE voyage_organise SET nb_place_maxi = ?, date_validite = ? WHERE id = ?";
+
+        // Met à jour les informations spécifiques pour les voyages personnalisés
+        String updatePersonnaliseSql = "UPDATE voyage_personnalise SET preference = ? WHERE id = ?";
+
+        try {
+            // Désactive l'autocommit pour démarrer une transaction
+            connection.setAutoCommit(false);
+
+            try (PreparedStatement pstmtVoyage = connection.prepareStatement(updateVoyageSql);
+                 PreparedStatement pstmtOrganise = connection.prepareStatement(updateOrganiseSql);
+                 PreparedStatement pstmtPersonnalise = connection.prepareStatement(updatePersonnaliseSql)) {
+
+                // Met à jour les informations de base dans la table voyage
+                pstmtVoyage.setString(1, voyage.getReference());
+                pstmtVoyage.setInt(2, voyage.getPrixParPersonne());
+                pstmtVoyage.setString(3, voyage.getDestination());
+                pstmtVoyage.setString(4, voyage.getDescriptif());
+                pstmtVoyage.setDate(5, new java.sql.Date(voyage.getDateDepart().getTime()));
+                pstmtVoyage.setDate(6, new java.sql.Date(voyage.getDateRetour().getTime()));
+                pstmtVoyage.setLong(7, voyage.getId());
+                pstmtVoyage.executeUpdate();
+
+                // Met à jour les informations spécifiques pour les voyages organisés
+                if (voyage instanceof VoyageOrganise) {
+                    VoyageOrganise voyageOrganise = (VoyageOrganise) voyage;
+                    pstmtOrganise.setInt(1, voyageOrganise.getNbPlaceMaxi());
+                    pstmtOrganise.setDate(2, new java.sql.Date(voyageOrganise.getDateValidite().getTime()));
+                    pstmtOrganise.setLong(3, voyageOrganise.getId());
+                    pstmtOrganise.executeUpdate();
+                }
+
+                // Met à jour les informations spécifiques pour les voyages personnalisés
+                if (voyage instanceof VoyagePersonnalise) {
+                    VoyagePersonnalise voyagePersonnalise = (VoyagePersonnalise) voyage;
+                    pstmtPersonnalise.setString(1, voyagePersonnalise.getPreference());
+                    pstmtPersonnalise.setLong(2, voyagePersonnalise.getId());
+                    pstmtPersonnalise.executeUpdate();
+                }
+
+                // Valide la transaction
+                connection.commit();
+            } catch (SQLException e) {
+                // Annule la transaction en cas d'erreur
+                connection.rollback();
+                System.err.println("Erreur lors de la mise à jour du voyage : " + e.getMessage());
+                e.printStackTrace();
+            } finally {
+                // Réactive l'autocommit
+                connection.setAutoCommit(true);
+            }
         } catch (SQLException e) {
+            System.err.println("Erreur lors de la gestion de la transaction : " + e.getMessage());
             e.printStackTrace();
         }
     }
 
     // Supprime un voyage de la base de données
     public void deleteVoyage(Long id) {
-        String sql = "DELETE FROM voyage WHERE id = ?";
-        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setLong(1, id);
-            pstmt.executeUpdate();
+        try {
+            // Désactive l'autocommit pour démarrer une transaction
+            connection.setAutoCommit(false);
+
+            // Supprime d'abord les enregistrements dans les tables dépendantes
+            String deleteReservationSql = "DELETE FROM reservation WHERE id_voyage = ?";
+            String deleteItineraireSql = "DELETE FROM itineraire WHERE id_voyage = ?";
+            String deleteOrganiseSql = "DELETE FROM voyage_organise WHERE id = ?";
+            String deletePersonnaliseSql = "DELETE FROM voyage_personnalise WHERE id = ?";
+            String deleteVoyageSql = "DELETE FROM voyage WHERE id = ?";
+
+            try (PreparedStatement pstmtReservation = connection.prepareStatement(deleteReservationSql);
+                 PreparedStatement pstmtItineraire = connection.prepareStatement(deleteItineraireSql);
+                 PreparedStatement pstmtOrganise = connection.prepareStatement(deleteOrganiseSql);
+                 PreparedStatement pstmtPersonnalise = connection.prepareStatement(deletePersonnaliseSql);
+                 PreparedStatement pstmtVoyage = connection.prepareStatement(deleteVoyageSql)) {
+
+                // Supprime les enregistrements dans reservation
+                pstmtReservation.setLong(1, id);
+                pstmtReservation.executeUpdate();
+
+                // Supprime les enregistrements dans itineraire
+                pstmtItineraire.setLong(1, id);
+                pstmtItineraire.executeUpdate();
+
+                // Supprime les enregistrements dans voyage_organise
+                pstmtOrganise.setLong(1, id);
+                pstmtOrganise.executeUpdate();
+
+                // Supprime les enregistrements dans voyage_personnalise
+                pstmtPersonnalise.setLong(1, id);
+                pstmtPersonnalise.executeUpdate();
+
+                // Supprime l'enregistrement dans voyage
+                pstmtVoyage.setLong(1, id);
+                pstmtVoyage.executeUpdate();
+
+                // Valide la transaction
+                connection.commit();
+            } catch (SQLException e) {
+                // Annule la transaction en cas d'erreur
+                connection.rollback();
+                System.err.println("Erreur lors de la suppression du voyage : " + e.getMessage());
+                e.printStackTrace();
+            } finally {
+                // Réactive l'autocommit
+                connection.setAutoCommit(true);
+            }
         } catch (SQLException e) {
+            System.err.println("Erreur lors de la gestion de la transaction : " + e.getMessage());
             e.printStackTrace();
         }
     }

@@ -89,7 +89,7 @@
                                 </image>
                             </ImageView>
                             <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Gestion des Itineraires" />
-                     <Button fx:id="loginButton5" maxWidth="Infinity" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="VOIR">
+                     <Button fx:id="loginButton5" onAction="#showItinerairesView" maxWidth="Infinity" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="VOIR">
                         <padding>
                            <Insets bottom="10" left="20" right="20" top="10" />
                         </padding>
@@ -103,7 +103,7 @@
                                 </image>
                             </ImageView>
                             <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Gestion des Réservations" />
-                     <Button fx:id="loginButton2" maxWidth="Infinity" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="VOIR">
+                     <Button fx:id="loginButton2" onAction="#showReservationsView" maxWidth="Infinity" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="VOIR">
                         <padding>
                            <Insets bottom="10" left="20" right="20" top="10" />
                         </padding>
@@ -117,7 +117,7 @@
                                 </image>
                             </ImageView>
                             <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Les statistiques" />
-                     <Button fx:id="loginButton1" maxWidth="Infinity" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="VOIR">
+                     <Button fx:id="loginButton1" onAction="#showStatistiquesView" maxWidth="Infinity" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="VOIR">
                         <padding>
                            <Insets bottom="10" left="20" right="20" top="10" />
                         </padding>
@@ -131,7 +131,7 @@
                                 </image>
                             </ImageView>
                             <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Rechercher" />
-                     <Button fx:id="loginButton" maxWidth="Infinity" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="VOIR">
+                     <Button fx:id="loginButton" onAction="#showRechercheView" maxWidth="Infinity" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="VOIR">
                         <padding>
                            <Insets bottom="10" left="20" right="20" top="10" />
                         </padding>

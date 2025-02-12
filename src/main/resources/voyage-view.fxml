@@ -61,6 +61,22 @@
         <ComboBox fx:id="typeVoyageCombo" GridPane.columnIndex="3" GridPane.rowIndex="2"
                   style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
 
+        <Label text="Nombre de places maxi:" GridPane.columnIndex="0" GridPane.rowIndex="4"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" visible="false" fx:id="labelNbPlaces"/>
+        <TextField fx:id="nbPlacesField" GridPane.columnIndex="1" GridPane.rowIndex="4"
+                   style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" visible="false"/>
+
+        <Label text="Date de validité:" GridPane.columnIndex="2" GridPane.rowIndex="4"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" visible="false" fx:id="labelDateValidite"/>
+        <DatePicker fx:id="dateValiditePicker" GridPane.columnIndex="3" GridPane.rowIndex="4"
+                    style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" visible="false"/>
+
+        <!-- Champs spécifiques pour les voyages personnalisés -->
+        <Label text="Préférence:" GridPane.columnIndex="0" GridPane.rowIndex="5"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" visible="false" fx:id="labelPreference"/>
+        <TextField fx:id="preferenceField" GridPane.columnIndex="1" GridPane.rowIndex="5"
+                   style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" visible="false"/>
+
         <Label text="Descriptif:" GridPane.columnIndex="0" GridPane.rowIndex="3"
                style="-fx-text-fill: #666666; -fx-font-size: 14;" />
         <TextArea fx:id="descriptifArea" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="3"

@@ -36,6 +36,12 @@ public class VoyageController {
     @FXML private DatePicker dateRetourPicker;
     @FXML private TextArea descriptifArea;
     @FXML private ComboBox<String> typeVoyageCombo;
+    @FXML private TextField nbPlacesField;
+    @FXML private DatePicker dateValiditePicker;
+    @FXML private TextField preferenceField;
+    @FXML private Label labelNbPlaces;
+    @FXML private Label labelDateValidite;
+    @FXML private Label labelPreference;
 
     private VoyageService voyageService;
     private ObservableList<Voyage> voyageList;
@@ -51,6 +57,31 @@ public class VoyageController {
         voyageTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 handleSelectVoyage();
+            }
+        });
+
+        typeVoyageCombo.getSelectionModel().selectedItemProperty().addListener((obs, oldValue, newValue) -> {
+            if ("Organisé".equals(newValue)) {
+                labelNbPlaces.setVisible(true);
+                nbPlacesField.setVisible(true);
+                labelDateValidite.setVisible(true);
+                dateValiditePicker.setVisible(true);
+                labelPreference.setVisible(false);
+                preferenceField.setVisible(false);
+            } else if ("Personnalisé".equals(newValue)) {
+                labelNbPlaces.setVisible(false);
+                nbPlacesField.setVisible(false);
+                labelDateValidite.setVisible(false);
+                dateValiditePicker.setVisible(false);
+                labelPreference.setVisible(true);
+                preferenceField.setVisible(true);
+            } else {
+                labelNbPlaces.setVisible(false);
+                nbPlacesField.setVisible(false);
+                labelDateValidite.setVisible(false);
+                dateValiditePicker.setVisible(false);
+                labelPreference.setVisible(false);
+                preferenceField.setVisible(false);
             }
         });
     }
@@ -106,9 +137,14 @@ public class VoyageController {
 
         Voyage newVoyage;
         if ("Organisé".equals(type)) {
-            newVoyage = new VoyageOrganise();
+            VoyageOrganise voyageOrganise = new VoyageOrganise();
+            voyageOrganise.setNbPlaceMaxi(Integer.parseInt(nbPlacesField.getText()));
+            voyageOrganise.setDateValidite(java.sql.Date.valueOf(dateValiditePicker.getValue()));
+            newVoyage = voyageOrganise;
         } else {
-            newVoyage = new VoyagePersonnalise();
+            VoyagePersonnalise voyagePersonnalise = new VoyagePersonnalise();
+            voyagePersonnalise.setPreference(preferenceField.getText());
+            newVoyage = voyagePersonnalise;
         }
 
         newVoyage.setReference(reference);
@@ -124,14 +160,6 @@ public class VoyageController {
         showAlert("Succès", "Le voyage a été créé avec succès.", Alert.AlertType.INFORMATION);
     }
 
-    private void showAlert(String title, String message, Alert.AlertType alertType) {
-        Alert alert = new Alert(alertType);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
     @FXML
     private void handleUpdateVoyage() {
         Voyage selectedVoyage = voyageTable.getSelectionModel().getSelectedItem();
@@ -142,6 +170,15 @@ public class VoyageController {
             selectedVoyage.setDescriptif(descriptifArea.getText());
             selectedVoyage.setDateDepart(java.sql.Date.valueOf(dateDepartPicker.getValue()));
             selectedVoyage.setDateRetour(java.sql.Date.valueOf(dateRetourPicker.getValue()));
+
+            if (selectedVoyage instanceof VoyageOrganise) {
+                VoyageOrganise voyageOrganise = (VoyageOrganise) selectedVoyage;
+                voyageOrganise.setNbPlaceMaxi(Integer.parseInt(nbPlacesField.getText()));
+                voyageOrganise.setDateValidite(java.sql.Date.valueOf(dateValiditePicker.getValue()));
+            } else if (selectedVoyage instanceof VoyagePersonnalise) {
+                VoyagePersonnalise voyagePersonnalise = (VoyagePersonnalise) selectedVoyage;
+                voyagePersonnalise.setPreference(preferenceField.getText());
+            }
 
             voyageService.updateVoyage(selectedVoyage);
             loadVoyages();
@@ -180,6 +217,23 @@ public class VoyageController {
             dateDepartPicker.setValue(sqlDateDepart.toLocalDate());
             dateRetourPicker.setValue(sqlDateRetour.toLocalDate());
             typeVoyageCombo.setValue(selectedVoyage instanceof VoyageOrganise ? "Organisé" : "Personnalisé");
+
+            if (selectedVoyage instanceof VoyageOrganise) {
+                VoyageOrganise voyageOrganise = (VoyageOrganise) selectedVoyage;
+                nbPlacesField.setText(String.valueOf(voyageOrganise.getNbPlaceMaxi()));
+
+                // Vérifie si la date de validité est non nulle avant de la convertir
+                java.util.Date utilDateValidite = voyageOrganise.getDateValidite();
+                if (utilDateValidite != null) {
+                    java.sql.Date sqlDateValidite = new java.sql.Date(utilDateValidite.getTime());
+                    dateValiditePicker.setValue(sqlDateValidite.toLocalDate());
+                } else {
+                    dateValiditePicker.setValue(null); // Efface la date si elle est nulle
+                }
+            } else if (selectedVoyage instanceof VoyagePersonnalise) {
+                VoyagePersonnalise voyagePersonnalise = (VoyagePersonnalise) selectedVoyage;
+                preferenceField.setText(voyagePersonnalise.getPreference());
+            }
         }
     }
 
@@ -191,8 +245,10 @@ public class VoyageController {
         dateDepartPicker.setValue(null);
         dateRetourPicker.setValue(null);
         typeVoyageCombo.getSelectionModel().clearSelection();
+        nbPlacesField.clear();
+        dateValiditePicker.setValue(null);
+        preferenceField.clear();
     }
-
     @FXML
     private void handleRetour(ActionEvent event) {
         try {
@@ -211,6 +267,13 @@ public class VoyageController {
     @FXML
     public void handleClearFields() {
         clearFields();
+    }
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
 
