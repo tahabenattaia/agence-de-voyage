@@ -107,5 +107,6 @@ public class ClientReservationController {
         messageLabel.setText("Réservation effectuée avec succès !");
         loadVoyages(); // Refresh the voyage list after reservation
     }
+
 }
 

@@ -2,7 +2,7 @@ package model;
 
 import java.util.*;
 
-public abstract class Client {
+public class Client {
     protected Long id;
     protected String code_cli;
     protected String nom;
@@ -53,6 +53,12 @@ public abstract class Client {
     public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
+
+    public Client(long clientId, String clientNom) {
+        this.id=clientId;
+        this.nom = clientNom;
+    }
+
 
     public Long getId() {
         return id;

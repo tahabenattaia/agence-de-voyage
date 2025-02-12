@@ -30,6 +30,9 @@ CREATE TABLE client (
     code_cli VARCHAR(50) NOT NULL,
     nom VARCHAR(100) NOT NULL,
     telephone VARCHAR(20),
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    is_admin BOOLEAN NOT NULL DEFAULT FALSE,
     adresse TEXT,
     type_client ENUM('ENTREPRISE', 'PARTICULIER') NOT NULL
 );
@@ -53,6 +56,7 @@ CREATE TABLE reservation (
     nb_place INT NOT NULL,
     id_voyage BIGINT,
     id_client BIGINT,
+    status varchar(20) DEFAULT 'EN_ATTENTE',
     FOREIGN KEY (id_voyage) REFERENCES voyage(id),
     FOREIGN KEY (id_client) REFERENCES client(id)
 );

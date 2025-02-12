@@ -37,7 +37,6 @@ public class Main {
             voyagePersonnalise.setDescriptif("Découverte de Tokyo");
             voyagePersonnalise.setDateDepart(new Date());
             voyagePersonnalise.setDateRetour(new Date(System.currentTimeMillis() + 10 * 24 * 60 * 60 * 1000)); // 10 jours plus tard
-            voyagePersonnalise.setPreference("Gastronomie");
 
             voyageService.createVoyage(voyagePersonnalise);
             System.out.println("Voyage personnalisé créé avec l'ID : " + voyagePersonnalise.getId());

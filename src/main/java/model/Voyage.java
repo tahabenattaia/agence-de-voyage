@@ -2,7 +2,7 @@ package model;
 
 import java.util.*;
 
-public abstract class Voyage {
+public class Voyage {
     protected Long id;
     protected String reference;
     protected int prixParPersonne;
@@ -27,6 +27,11 @@ public abstract class Voyage {
         this.descriptif = descriptif;
         this.dateDepart = dateDepart;
         this.dateRetour = dateRetour;
+    }
+
+    public Voyage(long voyageId, String voyageDestination) {
+        this.id = voyageId;
+        this.destination = voyageDestination;
     }
 
     public Long getId() {

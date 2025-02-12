@@ -47,16 +47,41 @@ public class VoyageController {
 
     @FXML
     private void handleCreateVoyage() {
+        // Vérification des champs obligatoires
+        if (referenceField.getText().isEmpty() ||
+                destinationField.getText().isEmpty() ||
+                prixField.getText().isEmpty() ||
+                dateDepartPicker.getValue() == null ||
+                dateRetourPicker.getValue() == null ||
+                typeVoyageCombo.getValue() == null) {
+
+            showAlert("Erreur", "Veuillez remplir tous les champs obligatoires.", Alert.AlertType.ERROR);
+            return;
+        }
+
         String reference = referenceField.getText();
         String destination = destinationField.getText();
-        int prix = Integer.parseInt(prixField.getText());
+        int prix;
+        try {
+            prix = Integer.parseInt(prixField.getText());
+        } catch (NumberFormatException ex) {
+            showAlert("Erreur", "Le prix doit être un nombre valide.", Alert.AlertType.ERROR);
+            return;
+        }
         String descriptif = descriptifArea.getText();
         String type = typeVoyageCombo.getValue();
 
         Voyage newVoyage;
         if ("Organisé".equals(type)) {
-            newVoyage = new VoyageOrganise();
+            // Création d'un voyage organisé
+            VoyageOrganise voyageOrganise = new VoyageOrganise();
+            // Si vous disposez d'un DatePicker pour la date de validité (par exemple, dateValiditePicker),
+            // décommentez et adaptez la ligne suivante pour renseigner ce champ :
+            // voyageOrganise.setDateValidite(dateValiditePicker.getValue() != null ?
+            //      java.sql.Date.valueOf(dateValiditePicker.getValue()) : null);
+            newVoyage = voyageOrganise;
         } else {
+            // Création d'un voyage personnalisé
             newVoyage = new VoyagePersonnalise();
         }
 
@@ -67,9 +92,19 @@ public class VoyageController {
         newVoyage.setDateDepart(Date.valueOf(dateDepartPicker.getValue()));
         newVoyage.setDateRetour(Date.valueOf(dateRetourPicker.getValue()));
 
+        // Appel du service pour créer le voyage
         voyageService.createVoyage(newVoyage);
         loadVoyages();
         clearFields();
+    }
+
+    // Méthode utilitaire pour afficher des messages d'alerte (à adapter selon vos besoins)
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     @FXML
