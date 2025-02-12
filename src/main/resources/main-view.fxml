@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="mainBorderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
+<BorderPane fx:id="mainBorderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
 
     <top>
         <HBox alignment="CENTER_LEFT" style="-fx-background-color: #1a73e8; -fx-padding: 10;">
@@ -60,7 +61,11 @@
                                 </image>
                             </ImageView>
                             <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Gestion des Voyages" />
-                            <Button onAction="#showVoyagesView" style="-fx-background-color: transparent;" text="Gestion des Voyages" />
+                     <Button fx:id="loginButton3" maxWidth="Infinity" onAction="#showVoyagesView" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="VOIR">
+                        <padding>
+                           <Insets bottom="10" left="20" right="20" top="10" />
+                        </padding>
+                     </Button>
                         </VBox>
 
                         <VBox alignment="CENTER" prefHeight="226.0" prefWidth="221.0" spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="0">
@@ -70,7 +75,11 @@
                                 </image>
                             </ImageView>
                             <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Gestion des Clients" />
-                            <Button onAction="#showClientsView" style="-fx-background-color: transparent;" text="Gestion des Clients" />
+                     <Button fx:id="loginButton4" maxWidth="Infinity" onAction="#showClientsView" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="VOIR">
+                        <padding>
+                           <Insets bottom="10" left="20" right="20" top="10" />
+                        </padding>
+                     </Button>
                         </VBox>
 
                         <VBox alignment="CENTER" spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-background-radius: 10;" GridPane.columnIndex="2" GridPane.rowIndex="0">
@@ -80,7 +89,11 @@
                                 </image>
                             </ImageView>
                             <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Gestion des Itineraires" />
-                            <Button onAction="#showItinerairesView" style="-fx-background-color: transparent;" text="Gestion des Itinéraires" />
+                     <Button fx:id="loginButton5" maxWidth="Infinity" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="VOIR">
+                        <padding>
+                           <Insets bottom="10" left="20" right="20" top="10" />
+                        </padding>
+                     </Button>
                         </VBox>
 
                         <VBox alignment="CENTER" spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-background-radius: 10;" GridPane.columnIndex="0" GridPane.rowIndex="1">
@@ -90,7 +103,11 @@
                                 </image>
                             </ImageView>
                             <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Gestion des Réservations" />
-                            <Button onAction="#showReservationsView" style="-fx-background-color: transparent;" text="Gestion des Réservations" />
+                     <Button fx:id="loginButton2" maxWidth="Infinity" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="VOIR">
+                        <padding>
+                           <Insets bottom="10" left="20" right="20" top="10" />
+                        </padding>
+                     </Button>
                         </VBox>
 
                         <VBox alignment="CENTER" spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -100,7 +117,11 @@
                                 </image>
                             </ImageView>
                             <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Les statistiques" />
-                            <Button onAction="#showStatistiquesView" style="-fx-background-color: transparent;" text="Statistiques" />
+                     <Button fx:id="loginButton1" maxWidth="Infinity" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="VOIR">
+                        <padding>
+                           <Insets bottom="10" left="20" right="20" top="10" />
+                        </padding>
+                     </Button>
                         </VBox>
 
                         <VBox alignment="CENTER" spacing="15" style="-fx-background-color: white; -fx-padding: 20; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-background-radius: 10;" GridPane.columnIndex="2" GridPane.rowIndex="1">
@@ -110,7 +131,11 @@
                                 </image>
                             </ImageView>
                             <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Rechercher" />
-                            <Button onAction="#showRechercheView" style="-fx-background-color: transparent;" text="Recherche" />
+                     <Button fx:id="loginButton" maxWidth="Infinity" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="VOIR">
+                        <padding>
+                           <Insets bottom="10" left="20" right="20" top="10" />
+                        </padding>
+                     </Button>
                         </VBox>
                     </GridPane>
                 </VBox>
@@ -124,4 +149,3 @@
         </HBox>
     </bottom>
 </BorderPane>
-

@@ -8,7 +8,7 @@ public class AdminReservation {
     private Voyage voyage;
     private Date dateReservation;
     private int nbPlace;
-    private String status; // Using 'status' instead of 'statut'
+    private String status;
 
     public AdminReservation() {}
 

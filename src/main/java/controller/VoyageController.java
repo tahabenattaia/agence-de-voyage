@@ -15,12 +15,20 @@ import model.VoyagePersonnalise;
 import service.VoyageService;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.sql.Date;
 import java.util.List;
+
 
 public class VoyageController {
 
     @FXML private TableView<Voyage> voyageTable;
+    @FXML private TableColumn<Voyage, String> referenceColumn;
+    @FXML private TableColumn<Voyage, String> destinationColumn;
+    @FXML private TableColumn<Voyage, Integer> prixColumn;
+    @FXML private TableColumn<Voyage, java.sql.Date> dateDepartColumn;
+    @FXML private TableColumn<Voyage, java.sql.Date> dateRetourColumn;
+    @FXML private TableColumn<Voyage, String> typeColumn;
     @FXML private TextField referenceField;
     @FXML private TextField destinationField;
     @FXML private TextField prixField;
@@ -36,7 +44,32 @@ public class VoyageController {
         voyageService = new VoyageService();
         voyageList = FXCollections.observableArrayList();
         typeVoyageCombo.getItems().addAll("Organisé", "Personnalisé");
+
+        setupTableColumns();
         loadVoyages();
+
+        voyageTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                handleSelectVoyage();
+            }
+        });
+    }
+
+    private void setupTableColumns() {
+        referenceColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getReference()));
+        destinationColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDestination()));
+        prixColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getPrixParPersonne()).asObject());
+        dateDepartColumn.setCellValueFactory(cellData -> {
+            java.util.Date utilDate = cellData.getValue().getDateDepart();
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            return new javafx.beans.property.SimpleObjectProperty<>(sqlDate);
+        });
+        dateRetourColumn.setCellValueFactory(cellData -> {
+            java.util.Date utilDate = cellData.getValue().getDateRetour();
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            return new javafx.beans.property.SimpleObjectProperty<>(sqlDate);
+        });
+        typeColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue() instanceof VoyageOrganise ? "Organisé" : "Personnalisé"));
     }
 
     private void loadVoyages() {
@@ -73,15 +106,8 @@ public class VoyageController {
 
         Voyage newVoyage;
         if ("Organisé".equals(type)) {
-            // Création d'un voyage organisé
-            VoyageOrganise voyageOrganise = new VoyageOrganise();
-            // Si vous disposez d'un DatePicker pour la date de validité (par exemple, dateValiditePicker),
-            // décommentez et adaptez la ligne suivante pour renseigner ce champ :
-            // voyageOrganise.setDateValidite(dateValiditePicker.getValue() != null ?
-            //      java.sql.Date.valueOf(dateValiditePicker.getValue()) : null);
-            newVoyage = voyageOrganise;
+            newVoyage = new VoyageOrganise();
         } else {
-            // Création d'un voyage personnalisé
             newVoyage = new VoyagePersonnalise();
         }
 
@@ -89,16 +115,15 @@ public class VoyageController {
         newVoyage.setDestination(destination);
         newVoyage.setPrixParPersonne(prix);
         newVoyage.setDescriptif(descriptif);
-        newVoyage.setDateDepart(Date.valueOf(dateDepartPicker.getValue()));
-        newVoyage.setDateRetour(Date.valueOf(dateRetourPicker.getValue()));
+        newVoyage.setDateDepart(java.sql.Date.valueOf(dateDepartPicker.getValue()));
+        newVoyage.setDateRetour(java.sql.Date.valueOf(dateRetourPicker.getValue()));
 
-        // Appel du service pour créer le voyage
         voyageService.createVoyage(newVoyage);
         loadVoyages();
         clearFields();
+        showAlert("Succès", "Le voyage a été créé avec succès.", Alert.AlertType.INFORMATION);
     }
 
-    // Méthode utilitaire pour afficher des messages d'alerte (à adapter selon vos besoins)
     private void showAlert(String title, String message, Alert.AlertType alertType) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -115,12 +140,15 @@ public class VoyageController {
             selectedVoyage.setDestination(destinationField.getText());
             selectedVoyage.setPrixParPersonne(Integer.parseInt(prixField.getText()));
             selectedVoyage.setDescriptif(descriptifArea.getText());
-            selectedVoyage.setDateDepart(Date.valueOf(dateDepartPicker.getValue()));
-            selectedVoyage.setDateRetour(Date.valueOf(dateRetourPicker.getValue()));
+            selectedVoyage.setDateDepart(java.sql.Date.valueOf(dateDepartPicker.getValue()));
+            selectedVoyage.setDateRetour(java.sql.Date.valueOf(dateRetourPicker.getValue()));
 
             voyageService.updateVoyage(selectedVoyage);
             loadVoyages();
             clearFields();
+            showAlert("Succès", "Le voyage a été mis à jour avec succès.", Alert.AlertType.INFORMATION);
+        } else {
+            showAlert("Erreur", "Veuillez sélectionner un voyage à mettre à jour.", Alert.AlertType.ERROR);
         }
     }
 
@@ -131,6 +159,9 @@ public class VoyageController {
             voyageService.deleteVoyage(selectedVoyage.getId());
             loadVoyages();
             clearFields();
+            showAlert("Succès", "Le voyage a été supprimé avec succès.", Alert.AlertType.INFORMATION);
+        } else {
+            showAlert("Erreur", "Veuillez sélectionner un voyage à supprimer.", Alert.AlertType.ERROR);
         }
     }
 
@@ -142,6 +173,12 @@ public class VoyageController {
             destinationField.setText(selectedVoyage.getDestination());
             prixField.setText(String.valueOf(selectedVoyage.getPrixParPersonne()));
             descriptifArea.setText(selectedVoyage.getDescriptif());
+            java.util.Date utilDateDepart = selectedVoyage.getDateDepart();
+            java.util.Date utilDateRetour = selectedVoyage.getDateRetour();
+            java.sql.Date sqlDateDepart = new java.sql.Date(utilDateDepart.getTime());
+            java.sql.Date sqlDateRetour = new java.sql.Date(utilDateRetour.getTime());
+            dateDepartPicker.setValue(sqlDateDepart.toLocalDate());
+            dateRetourPicker.setValue(sqlDateRetour.toLocalDate());
             typeVoyageCombo.setValue(selectedVoyage instanceof VoyageOrganise ? "Organisé" : "Personnalisé");
         }
     }
@@ -155,21 +192,23 @@ public class VoyageController {
         dateRetourPicker.setValue(null);
         typeVoyageCombo.getSelectionModel().clearSelection();
     }
+
     @FXML
     private void handleRetour(ActionEvent event) {
         try {
-            // Charger l'interface principale (Main)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/main-view.fxml"));
             Parent root = loader.load();
-
-            // Obtenir la scène actuelle et la remplacer par la nouvelle
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
+            stage.setTitle("Agence de Voyage - Menu Principal");
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
+            showAlert("Erreur", "Erreur lors du chargement de la vue principale.", Alert.AlertType.ERROR);
         }
     }
+
+    @FXML
     public void handleClearFields() {
         clearFields();
     }

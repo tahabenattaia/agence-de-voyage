@@ -49,7 +49,7 @@
                     <CategoryAxis label="Mois" style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="Revenus (€)" style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
+                    <NumberAxis label="Revenus (DT)" style="-fx-font-size: 14; -fx-text-fill: #666666;"/>
                 </yAxis>
             </LineChart>
         </Tab>

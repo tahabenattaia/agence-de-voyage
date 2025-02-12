@@ -174,7 +174,7 @@ public class ClientService {
                 "WHERE c.email = ? AND c.password = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setString(1, email);
-            pstmt.setString(2, password);
+            pstmt.setString(2, password); // In a real application, use password hashing
 
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {

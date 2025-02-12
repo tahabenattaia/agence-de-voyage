@@ -1,51 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" spacing="10" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClientReservationController">
-    <padding>
-        <Insets bottom="20" left="20" right="20" top="20" />
-    </padding>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="controller.ClientReservationController" style="-fx-background-color: white;">
 
-    <Label style="-fx-font-size: 24; -fx-font-weight: bold;" text="Réservation Client" />
+    <!-- Header -->
+    <HBox alignment="CENTER_LEFT" style="-fx-background-color: #1a73e8; -fx-padding: 15 20; -fx-spacing: 10;">
+        <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: white;" text="Réservation Client" />
+        <Region HBox.hgrow="ALWAYS" />
 
-    <GridPane hgap="10" vgap="10">
-        <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-      <columnConstraints>
-         <ColumnConstraints />
-         <ColumnConstraints />
-      </columnConstraints>
-      <rowConstraints>
-         <RowConstraints />
-      </rowConstraints>
-    </GridPane>
+        <Button style="-fx-background-color: transparent;" onAction="#handleRetour">
+            <graphic>
+                <ImageView fitHeight="33.0" fitWidth="42.0" preserveRatio="true">
+                    <image>
+                        <Image url="@images/retour.png"/>
+                    </image>
+                </ImageView>
+            </graphic>
+        </Button>
 
-    <TableView fx:id="voyageTable" VBox.vgrow="ALWAYS">
-        <columns>
-            <TableColumn fx:id="referenceColumn" text="Référence" />
-            <TableColumn fx:id="destinationColumn" text="Destination" />
-            <TableColumn fx:id="dateDepartColumn" prefWidth="91.20001220703125" text="Date de départ" />
-            <TableColumn fx:id="prixColumn" prefWidth="68.79998779296875" text="Prix" />
-        </columns>
-    </TableView>
-
-    <HBox alignment="CENTER" spacing="10">
-        <Label text="Nombre de places:" />
-        <Spinner fx:id="nbPlaceSpinner" initialValue="1" max="10" min="1" />
-        <Button onAction="#handleReservation" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Réserver" />
     </HBox>
 
-    <Label fx:id="messageLabel" style="-fx-font-style: italic;" />
+    <!-- Form Container -->
+    <GridPane hgap="15" vgap="15" style="-fx-background-color: white; -fx-padding: 20;
+            -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);
+            -fx-background-radius: 8; -fx-border-radius: 8;">
+        <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+        <Label text="Code Client:" GridPane.columnIndex="0" GridPane.rowIndex="0"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <TextField fx:id="codeClientField" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                   style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" />
+
+        <Label text="Nom:" GridPane.columnIndex="2" GridPane.rowIndex="0"
+               style="-fx-text-fill: #666666; -fx-font-size: 14;" />
+        <TextField fx:id="nomField" GridPane.columnIndex="3" GridPane.rowIndex="0"
+                   style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" />
+
+        <Button text="Identifier" onAction="#handleIdentifyClient" GridPane.columnIndex="4" GridPane.rowIndex="0"
+                style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold;
+                       -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" />
+    </GridPane>
+
+    <!-- Table -->
+    <TableView fx:id="voyageTable" VBox.vgrow="ALWAYS"
+               style="-fx-background-color: white; -fx-border-color: #e0e0e0;
+                      -fx-border-radius: 5; -fx-background-radius: 5;
+                      -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+        <columns>
+            <TableColumn fx:id="referenceColumn" text="Référence" style="-fx-alignment: CENTER;"/>
+            <TableColumn fx:id="destinationColumn" text="Destination" style="-fx-alignment: CENTER;"/>
+            <TableColumn fx:id="dateDepartColumn" text="Date de départ" style="-fx-alignment: CENTER;"/>
+            <TableColumn fx:id="prixColumn" text="Prix" style="-fx-alignment: CENTER;"/>
+        </columns>
+        <padding><Insets bottom="5"/></padding>
+    </TableView>
+
+    <!-- Reservation Container -->
+    <HBox alignment="CENTER" spacing="15" style="-fx-padding: 10 0 20 0;">
+        <Label text="Nombre de places:" style="-fx-text-fill: #666666; -fx-font-size: 14;"/>
+        <Spinner fx:id="nbPlaceSpinner" min="1" max="10" initialValue="1"
+                 style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" />
+        <Button text="Réserver" onAction="#handleReservation"
+                style="-fx-background-color: #ffb700; -fx-text-fill: white; -fx-font-weight: bold;
+                       -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" />
+    </HBox>
+
+    <Label fx:id="messageLabel" style="-fx-font-style: italic; -fx-text-fill: #666666;"/>
 </VBox>
