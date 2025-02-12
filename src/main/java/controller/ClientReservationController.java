@@ -1,42 +1,47 @@
 package controller;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.stage.Stage;
 import model.Client;
 import model.Voyage;
 import model.Reservation;
-import service.ClientService;
 import service.VoyageService;
 import service.ReservationService;
+import service.ClientService;
 
 import java.util.Date;
 import java.util.List;
 
 public class ClientReservationController {
 
-    @FXML private TextField codeClientField;
-    @FXML private TextField nomField;
-    @FXML private TableView<Voyage> voyageTable;
-    @FXML private TableColumn<Voyage, String> referenceColumn;
-    @FXML private TableColumn<Voyage, String> destinationColumn;
-    @FXML private TableColumn<Voyage, String> dateDepartColumn;
-    @FXML private TableColumn<Voyage, String> prixColumn;
-    @FXML private Spinner<Integer> nbPlaceSpinner;
-    @FXML private Label messageLabel;
+    @FXML
+    private Label clientInfoLabel;
+    @FXML
+    private TableView<Voyage> voyageTable;
+    @FXML
+    private TableColumn<Voyage, String> referenceColumn;
+    @FXML
+    private TableColumn<Voyage, String> destinationColumn;
+    @FXML
+    private TableColumn<Voyage, String> dateDepartColumn;
+    @FXML
+    private TableColumn<Voyage, String> prixColumn;
+    @FXML
+    private Spinner<Integer> nbPlaceSpinner;
+    @FXML
+    private Label messageLabel;
+    @FXML
+    private TextField emailField;
 
-    private ClientService clientService;
     private VoyageService voyageService;
     private ReservationService reservationService;
+    private ClientService clientService;
     private ObservableList<Voyage> voyageList;
     private Client currentClient;
 
+    @FXML
     public void initialize() {
         clientService = new ClientService();
         voyageService = new VoyageService();
@@ -44,9 +49,23 @@ public class ClientReservationController {
         voyageList = FXCollections.observableArrayList();
 
         setupTableColumns();
-        loadVoyages();
 
         nbPlaceSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 10, 1));
+    }
+
+    public void setCurrentClient(Client client) {
+        this.currentClient = client;
+        if (client != null) {
+            emailField.setText(client.getEmail());
+            messageLabel.setText("Client connecté : " + client.getNom());
+            loadVoyages(); // Load voyages when the client is set
+        }
+    }
+
+    private void updateClientInfo() {
+        if (currentClient != null) {
+            clientInfoLabel.setText("Client: " + currentClient.getNom() + " (" + currentClient.getCode_cli() + ")");
+        }
     }
 
     private void setupTableColumns() {
@@ -63,22 +82,9 @@ public class ClientReservationController {
     }
 
     @FXML
-    private void handleIdentifyClient() {
-        String codeClient = codeClientField.getText();
-        String nom = nomField.getText();
-
-        currentClient = clientService.getClientByCodeAndNom(codeClient, nom);
-        if (currentClient != null) {
-            messageLabel.setText("Client identifié : " + currentClient.getNom());
-        } else {
-            messageLabel.setText("Client non trouvé. Veuillez vérifier vos informations.");
-        }
-    }
-
-    @FXML
     private void handleReservation() {
         if (currentClient == null) {
-            messageLabel.setText("Veuillez vous identifier d'abord.");
+            messageLabel.setText("Erreur: Aucun client connecté.");
             return;
         }
 
@@ -99,21 +105,7 @@ public class ClientReservationController {
         reservationService.createReservation(newReservation);
 
         messageLabel.setText("Réservation effectuée avec succès !");
-    }
-    @FXML
-    private void handleRetour(ActionEvent event) {
-        try {
-            // Charger l'interface principale (Main)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main-view.fxml"));
-            Parent root = loader.load();
-
-            // Obtenir la scène actuelle et la remplacer par la nouvelle
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        loadVoyages(); // Refresh the voyage list after reservation
     }
 }
 

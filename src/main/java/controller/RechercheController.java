@@ -68,7 +68,7 @@ public class RechercheController {
 
         column3.setCellValueFactory(cellData -> {
             if (cellData.getValue() instanceof Voyage) {
-                return new javafx.beans.property.SimpleStringProperty(((Voyage) cellData.getValue()).getPrixParPersonne() + " €");
+                return new javafx.beans.property.SimpleStringProperty(((Voyage) cellData.getValue()).getPrixParPersonne() + " DT");
             } else if (cellData.getValue() instanceof Client) {
                 return new javafx.beans.property.SimpleStringProperty(((Client) cellData.getValue()).getTelephone());
             } else if (cellData.getValue() instanceof Reservation) {
