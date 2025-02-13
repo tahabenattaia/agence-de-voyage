@@ -18,10 +18,9 @@ public class AvisService {
         String sql = "INSERT INTO avis (id_client,  note, commentaire, date_avis) VALUES (?,  ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setLong(1, avis.getIdClient());
-
-            pstmt.setInt(3, avis.getNote());
-            pstmt.setString(4, avis.getCommentaire());
-            pstmt.setDate(5, avis.getDateAvis());
+            pstmt.setInt(2, avis.getNote());
+            pstmt.setString(3, avis.getCommentaire());
+            pstmt.setDate(4, avis.getDateAvis());
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {

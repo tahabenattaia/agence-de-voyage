@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="avisManagementBorderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GestionAvisController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" style="-fx-background-color: #1a73e8; -fx-padding: 10;">
+            <Label style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;" text="Gestion des Avis" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button onAction="#handleRetour" style="-fx-background-color: transparent;">
+                <graphic>
+                    <ImageView fitHeight="33.0" fitWidth="42.0">
+                        <Image url="@images/retour.png" />
+                    </ImageView>
+                </graphic>
+            </Button>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="20" style="-fx-padding: 20;">
+            <!-- Search and Filter Section -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="searchField" promptText="Rechercher dans les commentaires..." HBox.hgrow="ALWAYS" />
+                <ComboBox fx:id="filterRatingCombo" promptText="Filtrer par note" />
+                <DatePicker fx:id="filterDatePicker" promptText="Filtrer par date" />
+                <Button text="Rechercher" onAction="#handleSearch"
+                        style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold;">
+                    <graphic>
+                        <ImageView fitHeight="16" fitWidth="16">
+                            <Image url="@images/loupe1.png" />
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </HBox>
+
+            <!-- Reviews Table -->
+            <TableView fx:id="avisTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="clientColumn" text="Client" prefWidth="150"/>
+                    <TableColumn fx:id="noteColumn" text="Note" prefWidth="80"/>
+                    <TableColumn fx:id="commentaireColumn" text="Commentaire" prefWidth="300"/>
+                    <TableColumn fx:id="dateAvisColumn" text="Date" prefWidth="150"/>
+                </columns>
+            </TableView>
+
+            <!-- Details Section -->
+            <VBox spacing="10" style="-fx-background-color: white; -fx-padding: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0); -fx-background-radius: 10;">
+                <Label text="Détails de l'avis" style="-fx-font-size: 16; -fx-font-weight: bold;"/>
+
+                <GridPane hgap="10" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="100" prefWidth="150"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                    </columnConstraints>
+
+                    <Label text="Client:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <Label fx:id="selectedClientLabel" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                    <Label text="Note:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <Label fx:id="selectedNoteLabel" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                    <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <Label fx:id="selectedDateLabel" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+
+                    <Label text="Commentaire:" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <TextArea fx:id="selectedCommentaireArea" wrapText="true" editable="false" prefRowCount="3"
+                              GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                </GridPane>
+
+                <HBox spacing="10" alignment="CENTER_RIGHT">
+                    <Button text="Supprimer l'avis" onAction="#handleDeleteAvis"
+                            style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold;">
+                        <graphic>
+                            <ImageView fitHeight="16" fitWidth="16">
+                                <Image url="@images/delete.png"/>
+                            </ImageView>
+                        </graphic>
+                    </Button>
+                </HBox>
+            </VBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #e0e0e0; -fx-padding: 5;">
+            <Label fx:id="statusLabel" text="Prêt"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
+

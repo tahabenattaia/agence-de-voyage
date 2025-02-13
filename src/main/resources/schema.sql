@@ -50,6 +50,16 @@ CREATE TABLE particulier (
     FOREIGN KEY (id) REFERENCES client(id)
 );
 
+
+CREATE TABLE IF NOT EXISTS avis (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    id_client BIGINT NOT NULL,
+    note INT NOT NULL,
+    commentaire TEXT,
+    date_avis DATE NOT NULL,
+    FOREIGN KEY (id_client) REFERENCES client(id) ON DELETE CASCADE
+);
+
 CREATE TABLE reservation (
     id BIGINT PRIMARY KEY AUTO_INCREMENT,
     date_reservation DATE NOT NULL,

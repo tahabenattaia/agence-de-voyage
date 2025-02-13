@@ -52,6 +52,11 @@ public class MainController {
     }
 
     @FXML
+    private void showAvisView() {
+        loadView("/gestion-avis-view.fxml", "Gestion des Avis");
+    }
+
+    @FXML
     private void showReservationsView() {
         loadView("/reservation-view.fxml", "Gestion des Réservations");
     }

@@ -93,7 +93,7 @@
 
                     <VBox spacing="10" style="-fx-padding: 20; -fx-background-color: #fff; -fx-background-radius: 10;">
                         <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Votre avis nous intéresse" />
-                        <TextArea fx:id="noteTextArea" prefHeight="0.0" prefRowCount="3" prefWidth="696.0" promptText="Laissez une note..." />
+                        <TextArea fx:id="noteTextArea" prefHeight="0.0" prefRowCount="3" prefWidth="696.0" promptText="Laissez une note sur 5..." />
                         <TextArea fx:id="avisTextArea" prefRowCount="3" promptText="Donnez votre avis sur l'application..." />
                         <Button fx:id="submitAvisButton" onAction="#handleSubmitAvis" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Soumettre l'avis" />
                     </VBox>

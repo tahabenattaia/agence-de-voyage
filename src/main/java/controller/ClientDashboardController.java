@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -58,7 +59,7 @@ public class ClientDashboardController {
     @FXML
     private void handleSubmitAvis() {
         if (currentClient == null) {
-            showAlert("Erreur", "Vous devez être connecté pour soumettre un avis.");
+            showAlert("Erreur", "Vous devez être connecté pour soumettre un avis.",Alert.AlertType.ERROR);
             return;
         }
 
@@ -66,7 +67,7 @@ public class ClientDashboardController {
         String avisText = avisTextArea.getText();
 
         if (note.isEmpty() || avisText.isEmpty()) {
-            showAlert("Erreur", "Veuillez remplir à la fois la note et l'avis.");
+            showAlert("Erreur", "Veuillez remplir à la fois la note et l'avis." ,Alert.AlertType.ERROR);
             return;
         }
 
@@ -78,7 +79,7 @@ public class ClientDashboardController {
 
         avisService.createAvis(avis);
 
-        showAlert("Succès", "Votre avis a été soumis avec succès. Merci pour votre retour !");
+        showAlert("Succès", "Votre avis a été soumis avec succès. Merci pour votre retour !", Alert.AlertType.CONFIRMATION);
         noteTextArea.clear();
         avisTextArea.clear();
     }
@@ -94,7 +95,7 @@ public class ClientDashboardController {
             stage.setTitle("Agence de Voyage - Login");
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Erreur", "Erreur lors du chargement de la vue de connexion");
+            showAlert("Erreur", "Erreur lors du chargement de la vue de connexion" ,Alert.AlertType.ERROR);
         }
     }
 
@@ -114,15 +115,19 @@ public class ClientDashboardController {
 
         } catch (IOException e) {
             e.printStackTrace();
-            showAlert("Erreur", "Erreur lors du chargement de la vue : " + title);
+            showAlert("Erreur", "Erreur lors du chargement de la vue : " + title ,Alert.AlertType.ERROR );
         }
     }
 
-    private void showAlert(String title, String content) {
-        // Implement this method to show alerts
+    private void showAlert(String title, String message, Alert.AlertType alertType) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
-    // Interface for controllers that need to be aware of the current client
+
     public interface ClientAwareController {
         void setCurrentClient(Client client);
     }

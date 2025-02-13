@@ -19,7 +19,6 @@ public class AvisController {
     @FXML private TableView<Avis> avisTable;
     @FXML private TableColumn<Avis, Long> idColumn;
     @FXML private TableColumn<Avis, Long> idClientColumn;
-    @FXML private TableColumn<Avis, Long> idVoyageColumn;
     @FXML private TableColumn<Avis, Integer> noteColumn;
     @FXML private TableColumn<Avis, String> commentaireColumn;
     @FXML private TableColumn<Avis, Date> dateAvisColumn;
@@ -61,7 +60,6 @@ public class AvisController {
         newAvis.setNote((int) noteSlider.getValue());
         newAvis.setCommentaire(commentaireArea.getText());
         newAvis.setDateAvis(Date.valueOf(dateAvisPicker.getValue()));
-
         avisService.createAvis(newAvis);
         loadAvis();
         clearFields();
