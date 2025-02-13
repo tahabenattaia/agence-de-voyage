@@ -8,12 +8,14 @@ public class Reservation {
     private int nbPlace;
     private Voyage voyage;
     private Client client;
+    private String status;
     private Map<String, String> detailsReservation;
     private List<String> commentaires;
 
     public Reservation() {
         this.detailsReservation = new HashMap<>();
         this.commentaires = new ArrayList<>();
+        this.status = "EN_ATTENTE";
     }
 
     public Reservation(Date dateReservation, int nbPlace, Voyage voyage, Client client) {
@@ -22,6 +24,14 @@ public class Reservation {
         this.nbPlace = nbPlace;
         this.voyage = voyage;
         this.client = client;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Long getId() {

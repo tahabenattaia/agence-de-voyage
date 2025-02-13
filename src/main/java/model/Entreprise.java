@@ -49,5 +49,10 @@ public class Entreprise extends Client {
     public void supprimerContact(String contact) {
         this.contactsSecondaires.remove(contact);
     }
+
+    @Override
+    public String toString() {
+        return this.code_cli;
+    }
 }
 

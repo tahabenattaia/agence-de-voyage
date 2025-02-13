@@ -42,5 +42,10 @@ public class Particulier extends Client {
             this.documentsIdentite.remove(document);
         }
     }
+
+    @Override
+    public String toString() {
+        return this.code_cli;
+    }
 }
 

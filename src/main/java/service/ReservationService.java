@@ -24,19 +24,18 @@ public class ReservationService {
 
     // Méthode pour créer une réservation et insérer ses données dans la base
     public void createReservation(Reservation reservation) {
-        String sql = "INSERT INTO reservation (date_reservation, nb_place, id_voyage, id_client) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO reservation (date_reservation, nb_place, id_voyage, id_client, status) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setDate(1, new java.sql.Date(reservation.getDateReservation().getTime())); // Conversion de la date
-            pstmt.setInt(2, reservation.getNbPlace()); // Nombre de places
-            pstmt.setLong(3, reservation.getVoyage().getId()); // ID du voyage
-            pstmt.setLong(4, reservation.getClient().getId()); // ID du client
-
-            int affectedRows = pstmt.executeUpdate(); // Exécution de l'insertion
+            pstmt.setDate(1, new java.sql.Date(reservation.getDateReservation().getTime()));
+            pstmt.setInt(2, reservation.getNbPlace());
+            pstmt.setLong(3, reservation.getVoyage().getId());
+            pstmt.setLong(4, reservation.getClient().getId());
+            pstmt.setString(5, reservation.getStatus()); // Ajout du statut
+            int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Creating reservation failed, no rows affected.");
             }
 
-            // Récupération de l'ID généré
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     reservation.setId(generatedKeys.getLong(1));
@@ -45,7 +44,7 @@ public class ReservationService {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Affichage de l'erreur en cas d'échec
+            e.printStackTrace();
         }
     }
 
@@ -82,13 +81,14 @@ public class ReservationService {
 
     // Méthode pour mettre à jour une réservation existante
     public void updateReservation(Reservation reservation) {
-        String sql = "UPDATE reservation SET date_reservation = ?, nb_place = ?, id_voyage = ?, id_client = ? WHERE id = ?";
+        String sql = "UPDATE reservation SET date_reservation = ?, nb_place = ?, id_voyage = ?, id_client = ?, status = ? WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setDate(1, new java.sql.Date(reservation.getDateReservation().getTime())); // Mise à jour de la date
-            pstmt.setInt(2, reservation.getNbPlace()); // Mise à jour du nombre de places
-            pstmt.setLong(3, reservation.getVoyage().getId()); // Mise à jour du voyage
-            pstmt.setLong(4, reservation.getClient().getId()); // Mise à jour du client
-            pstmt.setLong(5, reservation.getId()); // Condition WHERE sur l'ID
+            pstmt.setDate(1, new java.sql.Date(reservation.getDateReservation().getTime()));
+            pstmt.setInt(2, reservation.getNbPlace());
+            pstmt.setLong(3, reservation.getVoyage().getId());
+            pstmt.setLong(4, reservation.getClient().getId());
+            pstmt.setString(5, reservation.getStatus());
+            pstmt.setLong(6, reservation.getId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -109,9 +109,10 @@ public class ReservationService {
     // Méthode utilitaire pour créer un objet Reservation à partir d'un ResultSet
     private Reservation createReservationFromResultSet(ResultSet rs) throws SQLException {
         Reservation reservation = new Reservation();
-        reservation.setId(rs.getLong("id")); // Récupération de l'ID
-        reservation.setDateReservation(rs.getDate("date_reservation")); // Récupération de la date
-        reservation.setNbPlace(rs.getInt("nb_place")); // Récupération du nombre de places
+        reservation.setId(rs.getLong("id"));
+        reservation.setDateReservation(rs.getDate("date_reservation"));
+        reservation.setNbPlace(rs.getInt("nb_place"));
+        reservation.setStatus(rs.getString("status")); // Récupération du statut
 
         // Récupération de l'objet Voyage associé
         Long voyageId = rs.getLong("id_voyage");

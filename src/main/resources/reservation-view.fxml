@@ -19,6 +19,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <VBox alignment="CENTER" spacing="20" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminReservationController">
 
     <!-- Header -->
@@ -43,7 +45,7 @@
         <padding><Insets bottom="20" left="20" right="20" top="20" /></padding>
 
         <Label style="-fx-text-fill: #666666; -fx-font-size: 14;" text="ID Réservation:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <TextField fx:id="idReservationField" editable="false" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <TextField fx:id="idAdminReservationField"  style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
         <Label style="-fx-text-fill: #666666; -fx-font-size: 14;" text="Client:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
         <ComboBox fx:id="clientCombo" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.rowIndex="0" />
@@ -58,7 +60,9 @@
         <Spinner fx:id="nbPlaceSpinner" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
         <Label style="-fx-text-fill: #666666; -fx-font-size: 14;" text="Statut:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-        <ComboBox fx:id="statutCombo" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+        <ComboBox fx:id="statutCombo" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.rowIndex="2">
+
+        </ComboBox>
 
         <Label style="-fx-text-fill: #666666; -fx-font-size: 14;" text="Commentaires:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
         <TextArea fx:id="commentairesArea" prefRowCount="3" promptText="Commentaires" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />

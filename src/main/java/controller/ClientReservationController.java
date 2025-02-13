@@ -81,6 +81,7 @@ public class ClientReservationController {
         }
     }
 
+
     @FXML
     private void handleReservation() {
         if (currentClient == null) {
@@ -101,6 +102,7 @@ public class ClientReservationController {
         newReservation.setVoyage(selectedVoyage);
         newReservation.setDateReservation(new Date());
         newReservation.setNbPlace(nbPlaces);
+        newReservation.setStatus("EN_ATTENTE"); // Définit le statut par défaut
 
         reservationService.createReservation(newReservation);
 
@@ -111,15 +113,16 @@ public class ClientReservationController {
     @FXML
     private void handleRetour(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/login.fxml"));
+            // Charger l'interface principale (Main)
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/client.fxml"));
             Parent root = loader.load();
+
+            // Obtenir la scène actuelle et la remplacer par la nouvelle
             Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
             stage.setScene(new Scene(root));
-            stage.setTitle("Agence de Voyage - Menu Principal");
             stage.show();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            showAlert("Erreur", "Erreur lors du chargement de la vue principale.");
         }
     }
 

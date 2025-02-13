@@ -14,6 +14,8 @@ import model.AdminReservation;
 import model.Client;
 import model.Voyage;
 import service.AdminReservationService;
+import service.VoyageService;
+import service.ClientService;
 import javafx.event.ActionEvent;
 
 import java.awt.Label;
@@ -21,11 +23,12 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 
 public class AdminReservationController {
 
     @FXML private TableView<AdminReservation> reservationTable;
-    @FXML private TableColumn<AdminReservation, Long> idReservationColumn;
+    @FXML private TableColumn<AdminReservation, String> idReservationColumn;
     @FXML private TableColumn<AdminReservation, String> clientColumn;
     @FXML private TableColumn<AdminReservation, String> voyageColumn;
     @FXML private TableColumn<AdminReservation, String> dateReservationColumn;
@@ -55,6 +58,22 @@ public class AdminReservationController {
 
         setupTableColumns();
         loadReservations();
+
+        // Initialise les ComboBox
+        initializeClientCombo();
+        initializeVoyageCombo();
+        statutCombo.getItems().addAll("EN_ATTENTE", "ACCEPTE", "REFUSE");
+
+        // Initialise le Spinner pour le nombre de places
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,10000, 1);
+        nbPlaceSpinner.setValueFactory(valueFactory);
+
+        // Ajoute un écouteur sur la sélection de la table
+        reservationTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                handleSelectReservation(newSelection);
+            }
+        });
     }
 
     private void setupTableColumns() {
@@ -70,7 +89,7 @@ public class AdminReservationController {
     private void loadReservations() {
         reservationList.setAll(reservationService.getAllReservations());
 
-        // 🔍 Ajout pour debug
+
         System.out.println("Données récupérées :");
         for (AdminReservation r : reservationList) {
             System.out.println("ID: " + r.getId() + ", Client: " + r.getClient().getNom() +
@@ -80,40 +99,37 @@ public class AdminReservationController {
         reservationTable.setItems(reservationList);
     }
 
+    private void handleSelectReservation(AdminReservation reservation) {
+        clientCombo.setValue(reservation.getClient());
+        voyageCombo.setValue(reservation.getVoyage());
+        java.util.Date utilDateReservation = reservation.getDateReservation();
+        java.sql.Date sqlDateReservation = new java.sql.Date(utilDateReservation.getTime());
+       dateReservationPicker.setValue(sqlDateReservation.toLocalDate());
+        nbPlaceSpinner.getValueFactory().setValue(reservation.getNbPlace());
+        statutCombo.setValue(reservation.getStatus());
+        idAdminReservationField.setText(reservation.getId().toString());
+    }
+    private void initializeClientCombo() {
+        ClientService cl = new ClientService();
+        List<Client> clients = cl.getAllClients();
+        clientCombo.getItems().setAll(clients);
+    }
 
-
-
-
+    private void initializeVoyageCombo() {
+        VoyageService vs = new VoyageService();
+        List<Voyage> voyages = vs.getAllVoyages();
+        voyageCombo.getItems().setAll(voyages);
+    }
     @FXML
     private void handleUpdateReservation(ActionEvent event) {
-        // Récupérer l'objet sélectionné dans la table
         AdminReservation selectedReservation = reservationTable.getSelectionModel().getSelectedItem();
         if (selectedReservation != null) {
-            // Récupérer l'ID de la réservation
-            String idReservation = idAdminReservationField.getText().trim();  // Supprimer les espaces blancs
-
-            if (idReservation.isEmpty()) {
-                // Gérer le cas où l'ID est vide
-                System.out.println("L'ID de la réservation est vide.");
-                // Vous pouvez afficher un message d'erreur à l'utilisateur ici
-                return;  // Sortir de la méthode si l'ID est vide
-            }
-
-            // Convertir l'ID en long
-            try {
-                selectedReservation.setId(Long.parseLong(idReservation));  // Conversion de l'ID en long
-            } catch (NumberFormatException e) {
-                // Gérer l'erreur si l'ID n'est pas un nombre valide
-                System.out.println("Erreur de format pour l'ID : " + idReservation);
-                return;  // Sortir de la méthode si l'ID est invalide
-            }
-
-            // Récupérer les autres valeurs des champs
-            Client selectedClient = clientCombo.getValue();  // L'objet Client sélectionné
-            Voyage selectedVoyage = voyageCombo.getValue();  // L'objet Voyage sélectionné
-            LocalDate selectedDate = dateReservationPicker.getValue();  // La date de réservation
-            Integer nbPlaces = nbPlaceSpinner.getValue();  // Le nombre de places
-            String statut = statutCombo.getValue();  // Le statut de la réservation
+            // Récupérer les valeurs des champs
+            Client selectedClient = clientCombo.getValue();
+            Voyage selectedVoyage = voyageCombo.getValue();
+            LocalDate selectedDate = dateReservationPicker.getValue();
+            Integer nbPlaces = nbPlaceSpinner.getValue();
+            String statut = statutCombo.getValue();
 
             // Mettre à jour l'objet sélectionné
             selectedReservation.setClient(selectedClient);
@@ -122,14 +138,11 @@ public class AdminReservationController {
             selectedReservation.setNbPlace(nbPlaces);
             selectedReservation.setStatus(statut);
 
-            // Sauvegarder ou mettre à jour la réservation dans le service ou la base de données
+            // Sauvegarder ou mettre à jour la réservation
             reservationService.updateReservation(selectedReservation);
-            reservationTable.refresh();
-
-        }
-         else {
-            // Message d'erreur si aucune réservation n'est sélectionnée
-            showAlert("Sélectionnez une réservation à mettre à jour", Alert.AlertType.WARNING);
+            reservationTable.refresh(); // Rafraîchir la table pour afficher les modifications
+        } else {
+            showAlert("Erreur", "Veuillez sélectionner une réservation à mettre à jour.");
         }
     }
 
@@ -145,7 +158,7 @@ public class AdminReservationController {
     private void handleDeleteReservation(ActionEvent event) {
         AdminReservation selectedReservation = reservationTable.getSelectionModel().getSelectedItem();
         if (selectedReservation != null) {
-            reservationService.deleteReservation(selectedReservation.getId());
+            reservationService.deleteReservation(selectedReservation.getId().toString());
             loadReservations();
         } else {
             showAlert("Aucune réservation sélectionnée", "Veuillez sélectionner une réservation à supprimer.");

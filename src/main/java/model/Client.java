@@ -128,5 +128,11 @@ public class Client {
     public int hashCode() {
         return Objects.hash(code_cli);
     }
+
+    @Override
+    public String toString() {
+        return this.code_cli;
+    }
 }
+
 

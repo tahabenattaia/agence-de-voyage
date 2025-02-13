@@ -118,5 +118,10 @@ public class Voyage {
     public int hashCode() {
         return Objects.hash(reference);
     }
+
+    @Override
+    public String toString() {
+        return this.reference;
+    }
 }
 

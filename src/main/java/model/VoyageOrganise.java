@@ -57,5 +57,10 @@ public class VoyageOrganise extends Voyage {
     public void ajouterDate(Date date) {
         placesDisponibles.putIfAbsent(date, nbPlaceMaxi);
     }
+
+    @Override
+    public String toString() {
+        return this.reference;
+    }
 }
 

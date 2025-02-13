@@ -102,9 +102,9 @@ public class LoginController {
     }
 
     private void loadClientReservationView(Client client) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/client-reservation-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/client.fxml"));
         Parent root = loader.load();
-        ClientReservationController controller = loader.getController();
+        ClientDashboardController controller = loader.getController();
         controller.setCurrentClient(client);
 
         Stage stage = (Stage) emailField.getScene().getWindow();

@@ -41,4 +41,9 @@ public class VoyagePersonnalise extends Voyage {
     public void supprimerOption(String option) {
         this.optionsPersonnalisees.remove(option);
     }
+
+    @Override
+    public String toString() {
+        return this.reference;
+    }
 }
