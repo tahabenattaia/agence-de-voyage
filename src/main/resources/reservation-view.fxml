@@ -46,10 +46,10 @@
         <TextField fx:id="idReservationField" editable="false" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
         <Label style="-fx-text-fill: #666666; -fx-font-size: 14;" text="Client:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-        <ComboBox fx:id="clientCombo" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+        <TextField fx:id="client" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
         <Label style="-fx-text-fill: #666666; -fx-font-size: 14;" text="Voyage:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <ComboBox fx:id="voyageCombo" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <TextField fx:id="voyage" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
         <Label style="-fx-text-fill: #666666; -fx-font-size: 14;" text="Date de réservation:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
         <DatePicker fx:id="dateReservationPicker" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
@@ -60,8 +60,7 @@
         <Label style="-fx-text-fill: #666666; -fx-font-size: 14;" text="Statut:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
         <ComboBox fx:id="statutCombo" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.rowIndex="2" />
 
-        <Label style="-fx-text-fill: #666666; -fx-font-size: 14;" text="Commentaires:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-        <TextArea fx:id="commentairesArea" prefRowCount="3" promptText="Commentaires" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
+
       <columnConstraints>
          <ColumnConstraints />
          <ColumnConstraints />
@@ -80,7 +79,6 @@
     <HBox alignment="CENTER" spacing="15" style="-fx-padding: 10 0 20 0;">
         <Button onAction="#handleUpdateReservation" style="-fx-background-color: #ffb700; -fx-text-fill: white; -fx-font-weight: bold;                        -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" text="Mettre à jour" />
         <Button onAction="#handleDeleteReservation" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold;                        -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" text="Supprimer" />
-        <Button onAction="#handleClearFields" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold;                        -fx-background-radius: 5; -fx-padding: 10 20; -fx-cursor: hand;" text="Effacer les champs" />
     </HBox>
 
     <!-- Table -->

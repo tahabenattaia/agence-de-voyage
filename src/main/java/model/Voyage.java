@@ -107,16 +107,16 @@ public class Voyage {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Voyage)) return false;
-        Voyage voyage = (Voyage) o;
-        return Objects.equals(reference, voyage.reference);
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Voyage voyage = (Voyage) obj;
+        return id == voyage.id;  // Comparaison basée sur l'ID du voyage
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(reference);
+        return Objects.hash(id);
     }
 }
 

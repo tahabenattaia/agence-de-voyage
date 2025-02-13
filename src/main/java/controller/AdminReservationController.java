@@ -4,12 +4,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import model.AdminReservation;
 import model.Client;
 import model.Voyage;
@@ -127,7 +123,7 @@ public class AdminReservationController {
             reservationTable.refresh();
 
         }
-         else {
+        else {
             // Message d'erreur si aucune réservation n'est sélectionnée
             showAlert("Sélectionnez une réservation à mettre à jour", Alert.AlertType.WARNING);
         }
@@ -154,18 +150,7 @@ public class AdminReservationController {
 
     @FXML
     private void handleRetour(ActionEvent event) {
-        try {
-            // Charger l'interface principale (Main)
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/main-view.fxml"));
-            Parent root = loader.load();
-
-            // Obtenir la scène actuelle et la remplacer par la nouvelle
-            Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
-            stage.setScene(new Scene(root));
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // Code pour retourner à l'écran précédent
     }
 
     private void showAlert(String title, String content) {
@@ -174,19 +159,5 @@ public class AdminReservationController {
         alert.setHeaderText(null);
         alert.setContentText(content);
         alert.showAndWait();
-    }
-
-    private void clearFields() {
-        idAdminReservationField.clear();
-        clientCombo.getSelectionModel().clearSelection();
-        voyageCombo.getSelectionModel().clearSelection();
-        dateReservationPicker.setValue(null);
-        nbPlaceSpinner.getValueFactory().setValue(1);
-        statutCombo.getSelectionModel().clearSelection();
-    }
-
-    @FXML
-    private void handleClearFields(ActionEvent event) {
-        clearFields();
     }
 }

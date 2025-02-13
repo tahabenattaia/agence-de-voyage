@@ -21,8 +21,8 @@ public class AdminReservationService {
         List<AdminReservation> reservations = new ArrayList<>();
         String sql = "SELECT r.*, c.id AS client_id, c.nom as client_nom, v.id AS voyage_id, v.destination as voyage_destination  " +
                 "FROM reservation r " +
-                "JOIN client c ON r.id_client = c.id " +
-                "JOIN voyage v ON r.id_voyage = v.id";
+                "JOIN client c ON r.id_client = c.id " +  // Assurez-vous que 'id_client' est le bon nom de colonne
+                "JOIN voyage v ON r.id_voyage = v.id";   // Assurez-vous que 'id_voyage' est le bon nom de colonne
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {

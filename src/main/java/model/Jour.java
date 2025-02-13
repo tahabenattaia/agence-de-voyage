@@ -9,7 +9,7 @@ public class Jour {
     private List<String> activites;
     private Map<String, String> horaires;
     private Set<String> lieux;
-
+    private Voyage voyage;
     public Jour() {
         this.activites = new ArrayList<>();
         this.horaires = new HashMap<>();
@@ -81,6 +81,10 @@ public class Jour {
     @Override
     public int hashCode() {
         return Objects.hash(jour);
+    }
+
+    public Voyage getVoyage() {
+        return voyage;
     }
 }
 
