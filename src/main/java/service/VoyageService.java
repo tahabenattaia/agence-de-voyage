@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class VoyageService {
-    private Connection connection;
+    private static Connection connection;
 
     public VoyageService() {
         this.connection = DatabaseConnection.getConnection();
@@ -112,7 +112,7 @@ public class VoyageService {
     }
 
     // Récupère tous les voyages de la base de données
-    public List<Voyage> getAllVoyages() {
+    public static List<Voyage> getAllVoyages() {
         List<Voyage> voyages = new ArrayList<>();
         String sql = "SELECT v.*, vo.nb_place_maxi, vo.date_validite, vp.preference " +
                 "FROM voyage v " +
@@ -250,7 +250,7 @@ public class VoyageService {
     }
 
     // Crée un objet Voyage à partir d'un ResultSet
-    private Voyage createVoyageFromResultSet(ResultSet rs) throws SQLException {
+    private static Voyage createVoyageFromResultSet(ResultSet rs) throws SQLException {
         Voyage voyage;
         if (rs.getString("type_voyage").equals("ORGANISE")) {
             VoyageOrganise voyageOrganise = new VoyageOrganise();
@@ -270,5 +270,15 @@ public class VoyageService {
         voyage.setDateDepart(rs.getDate("date_depart"));
         voyage.setDateRetour(rs.getDate("date_retour"));
         return voyage;
+    }
+    public static Voyage findVoyageByDestination(String destination) {
+        // Assuming getAllVoyages() returns the list of all voyages
+        List<Voyage> voyages = getAllVoyages();
+        for (Voyage voyage : voyages) {
+            if (voyage.getDestination().equalsIgnoreCase(destination.trim())) {
+                return voyage;
+            }
+        }
+        return null; // or throw an exception if appropriate
     }
 }

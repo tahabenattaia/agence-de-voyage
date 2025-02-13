@@ -48,10 +48,10 @@
         <TextField fx:id="idAdminReservationField"  style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
         <Label style="-fx-text-fill: #666666; -fx-font-size: 14;" text="Client:" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-        <ComboBox fx:id="clientCombo" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+        <TextField  fx:id="client" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
         <Label style="-fx-text-fill: #666666; -fx-font-size: 14;" text="Voyage:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <ComboBox fx:id="voyageCombo" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <TextField  fx:id="voyage" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
         <Label style="-fx-text-fill: #666666; -fx-font-size: 14;" text="Date de réservation:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
         <DatePicker fx:id="dateReservationPicker" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5;" GridPane.columnIndex="3" GridPane.rowIndex="1" />
@@ -64,20 +64,19 @@
 
         </ComboBox>
 
-        <Label style="-fx-text-fill: #666666; -fx-font-size: 14;" text="Commentaires:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-        <TextArea fx:id="commentairesArea" prefRowCount="3" promptText="Commentaires" style="-fx-background-radius: 5; -fx-border-color: #e0e0e0; -fx-border-radius: 5; -fx-padding: 8;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="3" />
-      <columnConstraints>
-         <ColumnConstraints />
-         <ColumnConstraints />
-         <ColumnConstraints />
-         <ColumnConstraints />
-      </columnConstraints>
-      <rowConstraints>
-         <RowConstraints />
-         <RowConstraints />
-         <RowConstraints />
-         <RowConstraints />
-      </rowConstraints>
+
+        <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+        </rowConstraints>
     </GridPane>
 
     <!-- Buttons Container -->

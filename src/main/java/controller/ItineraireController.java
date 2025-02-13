@@ -19,7 +19,7 @@ import java.util.List;
 
 public class ItineraireController {
 
-    @FXML private ComboBox<Voyage> voyageComboBox;
+    @FXML private ComboBox<Voyage> voyageComboBox; // Modification pour contenir l'objet Voyage
     @FXML private TableView<Jour> jourTable;
     @FXML private TableColumn<Jour, Integer> jourColumn;
     @FXML private TableColumn<Jour, String> descriptionColumn;
@@ -29,6 +29,7 @@ public class ItineraireController {
     @FXML private Button modifierJourButton;
     @FXML private Button supprimerJourButton;
     @FXML private Label messageLabel;
+    @FXML private TableColumn<Jour, String> voyageColumn;
 
     private ItineraireService itineraireService;
     private VoyageService voyageService;
@@ -45,9 +46,11 @@ public class ItineraireController {
 
         voyageComboBox.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
+                System.out.println("Voyage sélectionné : " + newSelection.getDestination() + " - " + newSelection.getDateDepart());
                 loadItineraire(newSelection);
             }
         });
+
 
         jourTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
@@ -57,11 +60,55 @@ public class ItineraireController {
     }
 
     private void setupComboBox() {
-        List<Voyage> voyages = voyageService.getAllVoyages();
+
+            List<Voyage> voyages = voyageService.getAllVoyages();
+
+            // Vérifie combien de voyages sont retournés
+            System.out.println("Nombre de voyages récupérés : " + voyages.size());
+            for (Voyage v : voyages) {
+                System.out.println("Voyage : " + v.getDestination() + " - " + v.getDateDepart());
+            }
+
+            voyageComboBox.setItems(FXCollections.observableArrayList(voyages));
+
+
+        // Utilisation d'un CellFactory pour afficher le nom du voyage et la date dans le ComboBox
+        voyageComboBox.setCellFactory(param -> new ListCell<Voyage>() {
+            @Override
+            protected void updateItem(Voyage voyage, boolean empty) {
+                super.updateItem(voyage, empty);
+                if (empty || voyage == null) {
+                    setText(null);
+                } else {
+                    // Affichage du voyage sans texte supplémentaire indésirable
+                    String displayText = voyage.getDestination() + " - " + voyage.getDateDepart().toString(); // Modifie ici selon tes besoins
+                    setText(displayText);
+                }
+            }
+        });
+
+        // Utilisation du même format d'affichage pour les éléments de la liste dans le ComboBox
+        voyageComboBox.setButtonCell(new ListCell<Voyage>() {
+            @Override
+            protected void updateItem(Voyage voyage, boolean empty) {
+                super.updateItem(voyage, empty);
+                if (empty || voyage == null) {
+                    setText(null);
+                } else {
+                    // Format d'affichage pour le bouton
+                    String displayText = voyage.getDestination() + " - " + voyage.getDateDepart().toString(); // Modifie ici selon tes besoins
+                    setText(displayText);
+                }
+            }
+        });
+
+        // Charger les voyages dans la ComboBox
         voyageComboBox.setItems(FXCollections.observableArrayList(voyages));
     }
 
+
     private void setupTableColumns() {
+
         jourColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getJour()).asObject());
         descriptionColumn.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDescription()));
     }
@@ -149,6 +196,7 @@ public class ItineraireController {
         clearFields();
         messageLabel.setText("Jour supprimé avec succès.");
     }
+
     @FXML
     private void handleRetour(ActionEvent event) {
         try {
@@ -164,9 +212,9 @@ public class ItineraireController {
             e.printStackTrace();
         }
     }
+
     private void clearFields() {
         jourField.clear();
         descriptionArea.clear();
     }
 }
-

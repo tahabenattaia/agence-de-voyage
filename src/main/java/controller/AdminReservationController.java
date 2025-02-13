@@ -35,9 +35,9 @@ public class AdminReservationController {
     @FXML private TableColumn<AdminReservation, Integer> nbPlaceColumn;
     @FXML private TableColumn<AdminReservation, String> statutColumn;
     @FXML
-    private ComboBox<Client> clientCombo;
+    private TextField client;
     @FXML
-    private ComboBox<Voyage> voyageCombo;
+    private TextField voyage;
     @FXML
     private DatePicker dateReservationPicker;
     @FXML
@@ -60,8 +60,8 @@ public class AdminReservationController {
         loadReservations();
 
         // Initialise les ComboBox
-        initializeClientCombo();
-        initializeVoyageCombo();
+        initializeClientField();
+        initializeVoyageField();
         statutCombo.getItems().addAll("EN_ATTENTE", "ACCEPTE", "REFUSE");
 
         // Initialise le Spinner pour le nombre de places
@@ -100,36 +100,57 @@ public class AdminReservationController {
     }
 
     private void handleSelectReservation(AdminReservation reservation) {
-        clientCombo.setValue(reservation.getClient());
-        voyageCombo.setValue(reservation.getVoyage());
+        client.setText(reservation.getClient().getNom());
+        voyage.setText(reservation.getVoyage().getDestination());
         java.util.Date utilDateReservation = reservation.getDateReservation();
         java.sql.Date sqlDateReservation = new java.sql.Date(utilDateReservation.getTime());
-       dateReservationPicker.setValue(sqlDateReservation.toLocalDate());
+        dateReservationPicker.setValue(sqlDateReservation.toLocalDate());
         nbPlaceSpinner.getValueFactory().setValue(reservation.getNbPlace());
         statutCombo.setValue(reservation.getStatus());
         idAdminReservationField.setText(reservation.getId().toString());
     }
-    private void initializeClientCombo() {
+    private void initializeClientField() {
         ClientService cl = new ClientService();
         List<Client> clients = cl.getAllClients();
-        clientCombo.getItems().setAll(clients);
+        if (!clients.isEmpty()) {
+            // Set the TextField to the name of the first client (or any other logic you prefer)
+            client.setText(clients.get(0).getNom());
+        }
     }
 
-    private void initializeVoyageCombo() {
+    private void initializeVoyageField() {
         VoyageService vs = new VoyageService();
         List<Voyage> voyages = vs.getAllVoyages();
-        voyageCombo.getItems().setAll(voyages);
+        if (!voyages.isEmpty()) {
+            // Set the TextField to the destination of the first voyage
+            voyage.setText(voyages.get(0).getDestination());
+        }
     }
     @FXML
     private void handleUpdateReservation(ActionEvent event) {
         AdminReservation selectedReservation = reservationTable.getSelectionModel().getSelectedItem();
         if (selectedReservation != null) {
             // Récupérer les valeurs des champs
-            Client selectedClient = clientCombo.getValue();
-            Voyage selectedVoyage = voyageCombo.getValue();
+            String clientName = client.getText();       // Changed from clientCombo.getValue()
+            String voyageDestination = voyage.getText();
             LocalDate selectedDate = dateReservationPicker.getValue();
             Integer nbPlaces = nbPlaceSpinner.getValue();
             String statut = statutCombo.getValue();
+
+            // Convert text into objects using your services
+            Client selectedClient = ClientService.findClientByName(clientName);
+            Voyage selectedVoyage = VoyageService.findVoyageByDestination(voyageDestination);
+
+            // Check if the lookups were successful
+            if (selectedClient == null) {
+                showAlert("Client non trouvé", Alert.AlertType.ERROR);
+                return;
+            }
+            if (selectedVoyage == null) {
+                showAlert("Voyage non trouvé", Alert.AlertType.ERROR);
+                return;
+            }
+
 
             // Mettre à jour l'objet sélectionné
             selectedReservation.setClient(selectedClient);
@@ -191,8 +212,8 @@ public class AdminReservationController {
 
     private void clearFields() {
         idAdminReservationField.clear();
-        clientCombo.getSelectionModel().clearSelection();
-        voyageCombo.getSelectionModel().clearSelection();
+        client.clear();
+        voyage.clear();
         dateReservationPicker.setValue(null);
         nbPlaceSpinner.getValueFactory().setValue(1);
         statutCombo.getSelectionModel().clearSelection();
