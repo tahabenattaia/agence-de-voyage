@@ -5,7 +5,10 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="avisManagementBorderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GestionAvisController">
+<BorderPane fx:id="avisManagementBorderPane" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;"  xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GestionAvisController">
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20" />
+    </padding>
 
     <top>
         <HBox alignment="CENTER_LEFT" style="-fx-background-color: #1a73e8; -fx-padding: 10;">

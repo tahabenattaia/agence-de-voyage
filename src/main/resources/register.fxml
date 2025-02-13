@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.geometry.Pos?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -12,98 +13,147 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.RegisterController">
+    <HBox alignment="CENTER" spacing="0"
+          AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
 
-    <HBox alignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <!-- Left side with travel image -->
-        <VBox alignment="CENTER" prefHeight="600.0" prefWidth="350.0" HBox.hgrow="ALWAYS">
-            <ImageView fitHeight="751.0" fitWidth="407.0">
+        <!-- Partie gauche : image qui remplit tout l'espace -->
+        <VBox alignment="CENTER" prefHeight="600.0" prefWidth="350.0">
+            <ImageView fx:id="backgroundImage" fitWidth="350.0" fitHeight="600.0" preserveRatio="false">
                 <Image url="@images/re.jpg" />
             </ImageView>
         </VBox>
 
-        <!-- Right side with register form -->
-        <VBox alignment="CENTER" prefHeight="698.0" prefWidth="436.0" spacing="20" HBox.hgrow="ALWAYS">
-            <ImageView fitHeight="133.0" fitWidth="329.0">
+        <!-- Partie droite : formulaire d'inscription -->
+        <VBox alignment="CENTER" prefHeight="600.0" prefWidth="450.0" spacing="20" style="-fx-padding: 20;">
+            <!-- Logo -->
+            <ImageView fitHeight="133.0" fitWidth="329.0" preserveRatio="true">
                 <Image url="@images/logo.png" />
             </ImageView>
 
-            <VBox maxWidth="382.0" prefHeight="558.0" prefWidth="303.0" spacing="15">
-                <Label style="-fx-text-fill: #666666;" text="Type de client:" />
-                <ComboBox fx:id="clientTypeCombo" prefWidth="150.0" />
-   
-                <Label style="-fx-text-fill: #666666;" text="Nom:" />
-                <TextField fx:id="nomField" style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
-                    <padding>
-                        <Insets bottom="10" left="10" right="10" top="10" />
-                    </padding>
-                </TextField>
-   
-                <Label style="-fx-text-fill: #666666;" text="Email:" />
-                <TextField fx:id="emailField" style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
-                    <padding>
-                        <Insets bottom="10" left="10" right="10" top="10" />
-                    </padding>
-                </TextField>
-   
-                <Label style="-fx-text-fill: #666666;" text="Mot de passe:" />
-                <PasswordField fx:id="passwordField" style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
-                    <padding>
-                        <Insets bottom="10" left="10" right="10" top="10" />
-                    </padding>
-                </PasswordField>
-   
-                <Label style="-fx-text-fill: #666666;" text="Téléphone:" />
-                <TextField fx:id="telephoneField" style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
-                    <padding>
-                        <Insets bottom="10" left="10" right="10" top="10" />
-                    </padding>
-                </TextField>
-   
-                <Label style="-fx-text-fill: #666666;" text="Adresse:" />
-                <TextField fx:id="adresseField" style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
-                    <padding>
-                        <Insets bottom="10" left="10" right="10" top="10" />
-                    </padding>
-                </TextField>
+            <!-- Conteneur principal pour les champs répartis en 2 colonnes -->
+            <HBox spacing="20" alignment="TOP_CENTER">
+                <!-- Colonne de gauche -->
+                <VBox spacing="15">
+                    <!-- Type de client -->
+                    <VBox spacing="5">
+                        <Label text="Type de client:" style="-fx-text-fill: #666666;" />
+                        <ComboBox fx:id="clientTypeCombo" prefWidth="180.0"
+                                  style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;" />
+                    </VBox>
 
-                <VBox fx:id="particulierFields" managed="false" spacing="15" visible="false">
-                    <Label style="-fx-text-fill: #666666;" text="CIN:" />
-                    <TextField fx:id="cinField" style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
+                    <!-- Nom -->
+                    <VBox spacing="5">
+                        <Label text="Nom:" style="-fx-text-fill: #666666;" />
+                        <TextField fx:id="nomField" prefWidth="180.0"
+                                   style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10" />
+                            </padding>
+                        </TextField>
+                    </VBox>
+
+                    <!-- Email -->
+                    <VBox spacing="5">
+                        <Label text="Email:" style="-fx-text-fill: #666666;" />
+                        <TextField fx:id="emailField" prefWidth="180.0"
+                                   style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10" />
+                            </padding>
+                        </TextField>
+                    </VBox>
+                </VBox>
+
+                <!-- Colonne de droite -->
+                <VBox spacing="15">
+                    <!-- Mot de passe -->
+                    <VBox spacing="5">
+                        <Label text="Mot de passe:" style="-fx-text-fill: #666666;" />
+                        <PasswordField fx:id="passwordField" prefWidth="180.0"
+                                       style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10" />
+                            </padding>
+                        </PasswordField>
+                    </VBox>
+
+                    <!-- Téléphone -->
+                    <VBox spacing="5">
+                        <Label text="Téléphone:" style="-fx-text-fill: #666666;" />
+                        <TextField fx:id="telephoneField" prefWidth="180.0"
+                                   style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10" />
+                            </padding>
+                        </TextField>
+                    </VBox>
+
+                    <!-- Adresse -->
+                    <VBox spacing="5">
+                        <Label text="Adresse:" style="-fx-text-fill: #666666;" />
+                        <TextField fx:id="adresseField" prefWidth="180.0"
+                                   style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
+                            <padding>
+                                <Insets top="10" right="10" bottom="10" left="10" />
+                            </padding>
+                        </TextField>
+                    </VBox>
+                </VBox>
+            </HBox>
+
+            <!-- Champs conditionnels disposés en parallèle -->
+            <HBox spacing="20" alignment="CENTER">
+                <!-- Partie pour particulier -->
+                <VBox fx:id="particulierFields" managed="false" visible="false" spacing="5">
+                    <Label text="CIN:" style="-fx-text-fill: #666666;" />
+                    <TextField fx:id="cinField" prefWidth="180.0"
+                               style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
                         <padding>
-                            <Insets bottom="10" left="10" right="10" top="10" />
+                            <Insets top="10" right="10" bottom="10" left="10" />
                         </padding>
                     </TextField>
                 </VBox>
-
-                <VBox fx:id="entrepriseFields" managed="false" spacing="15" visible="false">
-                    <Label style="-fx-text-fill: #666666;" text="Matricule Fiscale:" />
-                    <TextField fx:id="matriculeFiscaleField" style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
+                <!-- Partie pour entreprise -->
+                <VBox fx:id="entrepriseFields" managed="false" visible="false" spacing="5">
+                    <Label text="Matricule Fiscale:" style="-fx-text-fill: #666666;" />
+                    <TextField fx:id="matriculeFiscaleField" prefWidth="180.0"
+                               style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
                         <padding>
-                            <Insets bottom="10" left="10" right="10" top="10" />
+                            <Insets top="10" right="10" bottom="10" left="10" />
                         </padding>
                     </TextField>
-
-                    <Label style="-fx-text-fill: #666666;" text="Registre de Commerce:" />
-                    <TextField fx:id="registreCommerceField" style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
+                    <Label text="Registre de Commerce:" style="-fx-text-fill: #666666;" />
+                    <TextField fx:id="registreCommerceField" prefWidth="180.0"
+                               style="-fx-background-color: #f5f5f5; -fx-background-radius: 5;">
                         <padding>
-                            <Insets bottom="10" left="10" right="10" top="10" />
+                            <Insets top="10" right="10" bottom="10" left="10" />
                         </padding>
                     </TextField>
                 </VBox>
+            </HBox>
 
-                <Button fx:id="registerButton" maxWidth="Infinity" onAction="#handleRegister" prefHeight="38.0" prefWidth="250.0" style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="S'INSCRIRE">
+            <!-- Boutons -->
+            <HBox spacing="20" alignment="CENTER">
+                <Button fx:id="registerButton" onAction="#handleRegister" prefHeight="38.0" prefWidth="250.0"
+                        style="-fx-background-color: #ffa500; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                        text="S'INSCRIRE">
                     <padding>
-                        <Insets bottom="10" left="20" right="20" top="10" />
+                        <Insets top="10" right="20" bottom="10" left="20"/>
                     </padding>
                 </Button>
-
-                <Button fx:id="backToLoginButton" maxWidth="Infinity" onAction="#handleBackToLogin" prefHeight="38.0" prefWidth="250.0" style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="RETOUR À LA CONNEXION">
+                <Button fx:id="backToLoginButton" onAction="#handleBackToLogin" prefHeight="38.0" prefWidth="250.0"
+                        style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                        text="RETOUR À LA CONNEXION">
                     <padding>
-                        <Insets bottom="10" left="20" right="20" top="10" />
+                        <Insets top="10" right="20" bottom="10" left="20"/>
                     </padding>
                 </Button>
-            </VBox>
+            </HBox>
         </VBox>
     </HBox>
 </AnchorPane>

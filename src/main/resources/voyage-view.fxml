@@ -6,8 +6,11 @@
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<VBox alignment="CENTER" spacing="20" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+<VBox alignment="CENTER" spacing="20"  xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="controller.VoyageController" style="-fx-background-color: white;">
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20" />
+    </padding>
 
     <!-- Header -->
     <HBox alignment="CENTER_LEFT" style="-fx-background-color: #1a73e8; -fx-padding: 15 20; -fx-spacing: 10;">

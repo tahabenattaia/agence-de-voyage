@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="personnaliserVoyageBorderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PersonnaliserVoyageController">
+<BorderPane fx:id="personnaliserVoyageBorderPane" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;"  xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PersonnaliserVoyageController">
 
     <top>
         <HBox alignment="CENTER_LEFT" style="-fx-background-color: #1a73e8; -fx-padding: 10;">
@@ -57,7 +57,7 @@
 
                 <HBox spacing="10" alignment="CENTER">
                     <Button text="Soumettre la demande" onAction="#handleSubmitRequest"
-                            style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;">
+                            style="-fx-background-color: #1a73e8; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20;">
                         <graphic>
                             <ImageView fitHeight="20.0" fitWidth="20.0">
                                 <image>

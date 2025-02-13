@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="clientBorderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClientDashboardController">
+<BorderPane fx:id="clientBorderPane" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;"  xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ClientDashboardController">
 
     <top>
         <HBox alignment="CENTER_LEFT" style="-fx-background-color: #1a73e8; -fx-padding: 10;">
@@ -95,7 +95,7 @@
                         <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Votre avis nous intéresse" />
                         <TextArea fx:id="noteTextArea" prefHeight="0.0" prefRowCount="3" prefWidth="696.0" promptText="Laissez une note sur 5..." />
                         <TextArea fx:id="avisTextArea" prefRowCount="3" promptText="Donnez votre avis sur l'application..." />
-                        <Button fx:id="submitAvisButton" onAction="#handleSubmitAvis" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Soumettre l'avis" />
+                        <Button fx:id="submitAvisButton" onAction="#handleSubmitAvis" style="-fx-background-color: #ffa500; -fx-text-fill: white;" text="Soumettre l'avis" />
                     </VBox>
                 </VBox>
             </ScrollPane>

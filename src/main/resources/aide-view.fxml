@@ -6,7 +6,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="aideBorderPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AideController">
+<BorderPane fx:id="aideBorderPane" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;"  xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AideController">
 
     <top>
         <HBox alignment="CENTER_LEFT" style="-fx-background-color: #1a73e8; -fx-padding: 10;">
