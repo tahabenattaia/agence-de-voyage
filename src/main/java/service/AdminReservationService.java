@@ -19,10 +19,10 @@ public class AdminReservationService {
 
     public List<AdminReservation> getAllReservations() {
         List<AdminReservation> reservations = new ArrayList<>();
-        String sql = "SELECT r.*, c.id AS client_id, c.nom as client_nom, v.id AS voyage_id, v.destination as voyage_destination  " +
+        String sql = "SELECT r.*, c.id AS client_id, c.nom as client_nom, v.id AS voyage_id, v.destination as voyage_destination " +
                 "FROM reservation r " +
-                "JOIN client c ON r.id_client = c.id " +  // Assurez-vous que 'id_client' est le bon nom de colonne
-                "JOIN voyage v ON r.id_voyage = v.id";   // Assurez-vous que 'id_voyage' est le bon nom de colonne
+                "JOIN client c ON r.id_client = c.id " +
+                "JOIN voyage v ON r.id_voyage = v.id";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -45,6 +45,12 @@ public class AdminReservationService {
             pstmt.setInt(4, reservation.getNbPlace());
             pstmt.setString(5, reservation.getStatus());
             pstmt.setLong(6, reservation.getId());
+
+            // Ajouter des logs pour le débogage
+            System.out.println("Executing SQL: " + sql);
+            System.out.println("Values: " + reservation.getClient().getId() + ", " + reservation.getVoyage().getId() + ", " +
+                    reservation.getDateReservation() + ", " + reservation.getNbPlace() + ", " + reservation.getStatus() + ", " + reservation.getId());
+
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
                 throw new SQLException("Updating reservation failed, no rows affected.");
@@ -55,10 +61,10 @@ public class AdminReservationService {
         }
     }
 
-    public boolean deleteReservation(Long id) {
+    public boolean deleteReservation(String id) {
         String sql = "DELETE FROM reservation WHERE id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setLong(1, id);
+            pstmt.setString(1, id);
             int affectedRows = pstmt.executeUpdate();
             return affectedRows > 0;
         } catch (SQLException e) {
@@ -75,7 +81,7 @@ public class AdminReservationService {
         reservation.setVoyage(new Voyage(rs.getLong("voyage_id"), rs.getString("voyage_destination")));
         reservation.setDateReservation(rs.getDate("date_reservation"));
         reservation.setNbPlace(rs.getInt("nb_place"));
-        reservation.setStatus(rs.getString("status"));
+        reservation.setStatus(rs.getString("status")); // Récupération du statut
         return reservation;
     }
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class ClientService {
-    private Connection connection;
+    private static Connection connection;
 
     public ClientService() {
         this.connection = DatabaseConnection.getConnection();
@@ -93,7 +93,7 @@ public class ClientService {
         return Optional.empty();
     }
 
-    public List<Client> getAllClients() {
+    public static List<Client> getAllClients() {
         List<Client> clients = new ArrayList<>();
         String sql = "SELECT c.*, e.matricule_fiscale, e.registre_commerce, p.cin " +
                 "FROM client c " +
@@ -205,7 +205,7 @@ public class ClientService {
         return null;
     }
 
-    private Client createClientFromResultSet(ResultSet rs) throws SQLException {
+    private static Client createClientFromResultSet(ResultSet rs) throws SQLException {
         Client client;
         if (rs.getString("type_client").equals("ENTREPRISE")) {
             Entreprise entreprise = new Entreprise();
@@ -226,6 +226,19 @@ public class ClientService {
         client.setPassword(rs.getString("password"));
         client.setAdmin(rs.getBoolean("is_admin"));
         return client;
+    }
+
+
+    // New method to find a client by name
+    public static Client findClientByName(String name) {
+        // Assuming getAllClients() returns the list of all clients
+        List<Client> clients = getAllClients();
+        for (Client client : clients) {
+            if (client.getNom().equalsIgnoreCase(name.trim())) { // using trim() and case-insensitive check
+                return client;
+            }
+        }
+        return null; // or throw an exception if appropriate
     }
 }
 
